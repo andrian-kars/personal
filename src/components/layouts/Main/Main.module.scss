@@ -1,0 +1,26 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.mobileBg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.content {
+  width: 100%;
+  padding-top: 69px;
+
+  @media (min-width: 512px) {
+    padding: 0;
+    padding-left: 69px;
+  }
+}

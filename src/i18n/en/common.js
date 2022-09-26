@@ -1,5 +1,11 @@
 export const common = Object.freeze({
   title: 'Andrian Kars',
+  name: 'Andrian Karsanashvili',
+  // languages
+  english: 'English',
+  german: 'German',
+  japanese: 'Japanese',
+  // error pages
   'error.400.title': 'Invalid request.',
   'error.400.subTitle': 'The server cannot process your request.',
   'error.403.title': 'Forbidden.',
@@ -13,5 +19,5 @@ export const common = Object.freeze({
   'error.503.title': 'The service is unavailable.',
   'error.503.subTitle': 'The server is temporarily unable to process the request.',
   'error.default.title': 'Unknown error.',
-  'error.default.subTitle': 'An unknown error occurred.'
+  'error.default.subTitle': 'An unknown error occurred.',
 });

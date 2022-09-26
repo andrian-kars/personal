@@ -1,0 +1,38 @@
+export const skills = Object.freeze({
+  'skills.header.part1': 'My Hard and Soft',
+  'skills.header.part2': 'Lightsabers',
+  'skills.description.forceSensitive':
+    'if you are Force-sensitive you might be able to activate them',
+  'skills.description.activateThem': '(try to click them or "Lightsabers" to activate all)',
+  'skills.lightSaber.yoda': 'Yoda taught me',
+  // hard
+  'skills.programming': 'Programming',
+  'skills.protocols': 'Protocols',
+  'skills.libraries': 'Libraries',
+  'skills.app.description': 'Architecture, Optimization, Security',
+  'skills.react.description': 'Created and managed lots of projects',
+  'skills.programming.description': 'Paradigms, Patterns, Principles',
+  'skills.js.description': 'ES5/ES6+, Types, Interfaces, Abstractions',
+  'skills.html.description': 'HTML Coding with features of SCSS/LESS',
+  'skills.ci/cd.description': 'Linting, testing, deploying',
+  'skills.git.description': 'Environments: Github/Gitlab',
+  'skills.webpack.description': 'Reducing build time, builds creation',
+  'skills.jQuery.description': 'Partical usage supporting legacy Apps',
+  'skills.protocols.description': 'Http(s), Rest, Web Sockets',
+  'skills.sdlc.description': 'Agile Scrum, Kanban. Waterfall',
+  'skills.libraries.description': 'Bootstrap, Axios, Formik, yup, etc.',
+  // languages
+  'skills.english.description': 'Fluent communication',
+  'skills.german.description': 'Lived to Germany for 4 years',
+  'skills.japanese.description': 'Opening new horizons',
+  // soft
+  'skills.adaptability.description': 'Adaptability',
+  'skills.fastLearning.description': 'Ability to fast-learning',
+  'skills.analyticalUnderstanding.description': 'Analytical Understanding',
+  'skills.attentionToDetails.description': 'Attention to details',
+  'skills.criticalThinking.description': 'Critical Thinking',
+  'skills.goodCommunacation.description': 'Good Communication & Teamwork',
+  'skills.selfConfidence.description': 'Self-Confidence & Self-Motivation',
+  'skills.stressManagement.description': 'Stress Management & Patience',
+  'skills.flexibility.description': 'Flexibility',
+});
