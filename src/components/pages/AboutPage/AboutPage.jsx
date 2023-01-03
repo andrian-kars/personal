@@ -5,17 +5,16 @@ import { FormattedMessage, useIntl } from 'react-intl';
 const { aboutInfo, educationInfo, experienceInfo } = {
   aboutInfo: [
     { titleId: 'about.name', descriptionId: 'name', type: 'h1' },
-    { titleId: 'about.age', descriptionId: 'about.age.description' },
     { titleId: 'about.experience', descriptionId: 'about.experience.description' },
     { titleId: 'about.location', descriptionId: 'location' },
     { titleId: 'about.socials', descriptionId: 'about.socials.description' },
   ],
-  educationInfo: Array.from([1, 2, 3, 4, 5, 6, 7, 8], (n) => ({
+  educationInfo: Array.from([1, 2, 3, 4, 5, 6], (n) => ({
     titleId: `about.education.${n}`,
     timeId: `about.education.${n}.time`,
     descriptionId: `about.education.${n}.description`,
   })),
-  experienceInfo: Array.from([1, 2, 3, 4], (n) => ({
+  experienceInfo: Array.from([1, 2], (n) => ({
     titleId: `about.experience.${n}`,
     timeId: `about.experience.${n}.time`,
     descriptionId: `about.experience.${n}.description`,
