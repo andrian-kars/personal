@@ -1,9 +1,9 @@
-import social from 'public/assets/images/projects/social.jpg';
-import anilibria from 'public/assets/images/projects/anilibria.jpg';
-import personal from 'public/assets/images/projects/personal.jpg';
-import novela from 'public/assets/images/projects/novela.jpg';
-import htmlCoding from 'public/assets/images/projects/html-coding.jpg';
-import movie from 'public/assets/images/projects/movie.jpg';
+import social from 'src/assets/images/projects/social.jpg';
+import anilibria from 'src/assets/images/projects/anilibria.jpg';
+import personal from 'src/assets/images/projects/personal.jpg';
+import novela from 'src/assets/images/projects/novela.jpg';
+import htmlCoding from 'src/assets/images/projects/html-coding.jpg';
+import movie from 'src/assets/images/projects/movie.jpg';
 
 export const works = Object.freeze({
   // 1

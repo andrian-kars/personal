@@ -1,5 +1,5 @@
 import { ButtonTypeOne } from 'src/components/animation';
-import cvDocument from 'public/assets/andrian-kars-cv.pdf';
+import cvDocument from 'src/assets/andrian-kars-cv.pdf';
 import { useIntl } from 'react-intl';
 import s from './HomePage.module.scss';
 import { useState } from 'react';

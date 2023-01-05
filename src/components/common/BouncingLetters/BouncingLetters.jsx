@@ -20,7 +20,7 @@ export const BouncingLetters = ({ lettersToBounce }) => {
           <span onMouseOver={handleBounce} key={i}>
             {letter}
           </span>
-        )
+        ),
       )}
     </span>
   );

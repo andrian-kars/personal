@@ -1,4 +1,4 @@
-import cvDocument from 'public/assets/andrian-kars-cv.pdf';
+import cvDocument from 'src/assets/andrian-kars-cv.pdf';
 
 const currentYear = new Date().getFullYear();
 
