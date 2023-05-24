@@ -5,7 +5,7 @@ export const TerminalLetters = ({
   textToType,
   typingSpeed = 120,
   timeToWaitBeforeTyping = 0,
-  isBouncing = false
+  isBouncing = false,
 }) => {
   const [isStartTyping, setIsStartTyping] = useState(!timeToWaitBeforeTyping);
   const [terminalText, setTerminalText] = useState('');

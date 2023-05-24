@@ -13,5 +13,5 @@ export const common = Object.freeze({
   'error.503.title': 'Сервіс не доступний.',
   'error.503.subTitle': 'Сервер тимчасово не може обробити запит.',
   'error.default.title': 'Невідома помилка.',
-  'error.default.subTitle': 'Відбулась невідома помилка.'
+  'error.default.subTitle': 'Відбулась невідома помилка.',
 });
