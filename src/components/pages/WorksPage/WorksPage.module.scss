@@ -47,6 +47,11 @@
   margin-bottom: 20px;
   animation: show-buttons 2s;
 
+  &:nth-child(5) {
+    background-size: auto !important;
+    background-color: $btnBgColor;
+  }
+
   &:hover {
     opacity: 1 !important;
     .workContent {

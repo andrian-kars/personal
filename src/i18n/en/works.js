@@ -1,9 +1,9 @@
-import social from 'src/assets/images/projects/social.jpg';
 import anilibria from 'src/assets/images/projects/anilibria.jpg';
-import personal from 'src/assets/images/projects/personal.jpg';
-import novela from 'src/assets/images/projects/novela.jpg';
 import htmlCoding from 'src/assets/images/projects/html-coding.jpg';
 import movie from 'src/assets/images/projects/movie.jpg';
+import personal from 'src/assets/images/projects/personal.jpg';
+import social from 'src/assets/images/projects/social.jpg';
+import solidaro from 'src/assets/images/projects/solidaro.png';
 
 export const works = Object.freeze({
   // 1
@@ -32,11 +32,11 @@ export const works = Object.freeze({
   'works.4.photo': personal,
   'works.4.link': 'https://andrian-kars.com/',
   // 5
-  'works.5.name': 'Novela',
-  'works.5.description': 'A place to read electronic chinese novels in three languages',
-  'works.5.technologies': 'JavaScript | ReactJs | i18n | SCSS modules',
-  'works.5.photo': novela,
-  'works.5.link': 'https://andrian-kars.com/novela/',
+  'works.5.name': 'Solidaro',
+  'works.5.description': 'Landing page for Solidaro Software Development company',
+  'works.5.technologies': 'TypeScript | NextJs | SCSS modules',
+  'works.5.photo': solidaro,
+  'works.5.link': 'https://solidaro.com/',
   // 6
   'works.6.name': 'Mavic',
   'works.6.description': 'Example of HTML Coding',

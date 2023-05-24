@@ -13,7 +13,7 @@ export const about = Object.freeze({
   'about.age': 'Age',
   'about.age.description': `${currentYear - 2001} years`,
   'about.experience': 'Experience',
-  'about.experience.description': `${currentYear - 2019} years`,
+  'about.experience.description': `${currentYear - 2019}+ years`,
   'about.location': 'Location',
   'about.socials': 'LinkedIn & GitHub',
   'about.socials.description': '/andrian-kars',
