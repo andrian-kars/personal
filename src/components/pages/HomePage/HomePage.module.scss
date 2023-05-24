@@ -96,7 +96,9 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 550px;
+    min-width: 550px;
+    width: 40%;
+    max-width: 730px;
     z-index: 69;
   }
 
