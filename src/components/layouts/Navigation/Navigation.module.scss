@@ -26,8 +26,16 @@
     fill: $svgColor;
     transition: 0.2s;
 
+    polygon {
+      fill: $mainCompColor;
+    }
+
     &:hover {
       fill: $svgHoverColor;
+
+      polygon {
+        fill: $svgColor;
+      }
     }
   }
 }

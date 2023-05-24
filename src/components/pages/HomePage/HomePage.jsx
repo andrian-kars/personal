@@ -65,7 +65,7 @@ export const HomePage = () => {
           }
         />
       </div>
-      <img src={me} alt="" className={s.me} />
+      <img src={me} alt="me" className={s.me} />
     </div>
   );
 };
