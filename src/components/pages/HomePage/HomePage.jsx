@@ -1,7 +1,8 @@
-import { NightSky, Mandalorian } from 'src/components/animation';
-import s from './HomePage.module.scss';
-import { TerminalLetters } from 'src/components/common';
 import { useIntl } from 'react-intl';
+import me from 'src/assets/images/background/me.png';
+import { NightSky } from 'src/components/animation';
+import { TerminalLetters } from 'src/components/common';
+import s from './HomePage.module.scss';
 import { HomePageButtons } from './HomePageButtons';
 
 const TYPING_SPEED = 120;
@@ -64,7 +65,7 @@ export const HomePage = () => {
           }
         />
       </div>
-      <Mandalorian />
+      <img src={me} alt="" className={s.me} />
     </div>
   );
 };
