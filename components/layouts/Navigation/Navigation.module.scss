@@ -1,0 +1,91 @@
+@import "@styles/_variables";
+
+.navigation {
+  background-color: $mainCompColor;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+
+  @media (min-width: 512px) {
+    display: flex;
+    flex-direction: column;
+    width: 69px;
+    min-height: 100vh;
+    padding: 20px 0;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: $svgColor;
+    transition: 0.2s;
+
+    &:hover {
+      fill: $svgHoverColor;
+    }
+  }
+}
+
+.active {
+  svg {
+    fill: $svgHoverColor;
+  }
+}
+
+.logo {
+  display: none;
+
+  @media (min-width: 512px) {
+    display: block;
+  }
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 1000;
+
+  .link {
+    display: inline-block;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      margin: 10px 15px;
+    }
+  }
+
+  @media (min-width: 512px) {
+    display: block;
+    width: auto;
+
+    .link {
+      margin-bottom: 30px;
+
+      svg {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.socials {
+  display: none;
+
+  .social a {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 512px) {
+    display: block;
+  }
+}
