@@ -14,21 +14,21 @@ const works = [
       "Search bnameId, movies rating, saving a movie to favorites, detailed information about a movie...",
     technologiesId: "React | TypeScript | API",
     photoId: movie.src,
-    linkId: "https://andrian-kars.com/movies/",
+    linkId: "https://andrian-kars.github.io/movies",
   },
   {
     nameId: "Social",
     descriptionId: "Social Network, with lots of cool features",
     technologiesId: "React | TypeScript | API",
     photoId: social.src,
-    linkId: "https://andrian-kars.com/social/",
+    linkId: "https://andrian-kars.github.io/social",
   },
   {
     nameId: "Anilibria",
     descriptionId: "Significantly improved the current website of anilibria.tv",
     technologiesId: "React | SCSS Modules | API",
     photoId: anilibria.src,
-    linkId: "https://andrian-kars.com/anilibria/",
+    linkId: "https://andrian-kars.github.io/anilibria-react",
   },
   {
     nameId: "This Website",
@@ -49,7 +49,7 @@ const works = [
     descriptionId: "Example of HTML Coding",
     technologiesId: "HTML | CSS | SASS | jQuerry",
     photoId: htmlCoding.src,
-    linkId: "https://andrian-kars.com/mavic/",
+    linkId: "https://andrian-kars.github.io/mavic-2",
   },
 ];
 
