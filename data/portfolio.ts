@@ -74,7 +74,7 @@ export const impact: readonly Impact[] = [
       "Modernized a legacy UI stack, removing blockers that had stalled feature delivery across multiple product teams.",
       "Built a reusable component library shared across products, improving UI consistency.",
       "Migrated VBScript to cross-browser JavaScript and stabilized IE quirks-mode CSS without breaking the existing experience.",
-      "Assessed a frontend architecture and delivered a prioritized roadmap for a more resilient release.",
+      "Improved CI/CD pipeline speed by over 200% for faster, more reliable releases.",
     ],
   },
   {
