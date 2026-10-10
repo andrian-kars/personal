@@ -24,11 +24,11 @@ import {
   skillGroups,
 } from "@/data/portfolio";
 import portrait from "@/public/images/background/me.png";
-import portraitMobile from "@/public/images/background/me-mobile.png";
 import styles from "./HomePage.module.scss";
 
 const impactIcons = [Layers, Gauge, Users];
-const desktopPortraitSizes = "(max-width: 1100px) 365px, 490px";
+const blankImage =
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
 function SectionLabel({ number, children }: { number: string; children: string }) {
   return (
@@ -39,32 +39,21 @@ function SectionLabel({ number, children }: { number: string; children: string }
 }
 
 function Portrait() {
-  const shared = {
-    alt: "Andrian Karsanashvili wearing red glasses",
-    fetchPriority: "high" as const,
-    loading: "eager" as const,
-  };
   const {
-    props: { srcSet: desktopSrcSet },
-  } = getImageProps({ ...shared, src: portrait, sizes: desktopPortraitSizes });
-  const {
-    props: { alt, ...mobile },
+    props: { alt, ...image },
   } = getImageProps({
-    ...shared,
-    src: portraitMobile,
-    sizes: "(max-width: 360px) 100px, (max-width: 600px) 130px, 180px",
+    alt: "Andrian Karsanashvili wearing red glasses",
+    src: portrait,
+    sizes: "(max-width: 1100px) 365px, 490px",
+    fetchPriority: "high",
+    loading: "eager",
   });
 
   return (
     <picture>
-      <source
-        media="(min-width: 761px)"
-        srcSet={desktopSrcSet}
-        sizes={desktopPortraitSizes}
-        width={portrait.width}
-        height={portrait.height}
-      />
-      <img {...mobile} alt={alt} />
+      {/* The portrait is hidden on phones; a blank pixel spares them the download. */}
+      <source media="(max-width: 760px)" srcSet={blankImage} />
+      <img {...image} alt={alt} />
     </picture>
   );
 }

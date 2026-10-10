@@ -23,13 +23,6 @@ test("shows the agreed identity and evidence without browser errors", async ({
   await expect(page.locator("#impact")).toContainText("$200K+");
   await expect(page.locator("#experience")).toContainText("Senior Full-Stack Developer");
   await expect(page.locator("#expertise")).toContainText("ASP.NET Core");
-  const portrait = page.getByAltText("Andrian Karsanashvili wearing red glasses");
-  await expect(portrait).toBeVisible();
-  expect(
-    await portrait.evaluate(
-      (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
-    ),
-  ).toBeTruthy();
   expect(errors).toEqual([]);
 });
 
@@ -74,26 +67,32 @@ test("keeps every in-page link pointed at a unique, existing target", async ({
   expect(duplicates).toEqual([]);
 });
 
-test("serves a cropped portrait to phones and the full portrait to desktops", async ({
+test("skips the portrait on phones and serves a right-sized one to desktops", async ({
   browser,
   baseURL,
 }) => {
-  for (const [width, expectMobile] of [
-    [390, true],
-    [1440, false],
-  ] as const) {
+  for (const width of [390, 1440]) {
     const context = await browser.newContext({
       viewport: { width, height: 900 },
       baseURL,
     });
     try {
       const page = await context.newPage();
-      await page.goto("/");
+      const portraitRequests: string[] = [];
+      page.on("request", (request) => {
+        if (request.url().includes("/_next/image")) portraitRequests.push(request.url());
+      });
+      await page.goto("/", { waitUntil: "load" });
       const image = page.getByAltText("Andrian Karsanashvili wearing red glasses");
+      if (width <= 760) {
+        await expect(image).toBeHidden();
+        expect(portraitRequests).toEqual([]);
+        continue;
+      }
       await expect(image).toBeVisible();
       await expect
         .poll(() => image.evaluate((element: HTMLImageElement) => element.currentSrc))
-        .toContain("me");
+        .toContain("/_next/image");
       const { source, rendered, loaded, density } = await image.evaluate(
         (element: HTMLImageElement) => ({
           source: element.currentSrc,
@@ -103,7 +102,6 @@ test("serves a cropped portrait to phones and the full portrait to desktops", as
         }),
       );
       expect(loaded).toBeTruthy();
-      expect(source.includes("me-mobile")).toBe(expectMobile);
       const requestedWidth = Number(new URL(source).searchParams.get("w"));
       expect(requestedWidth).toBeLessThanOrEqual(Math.max(640, rendered * density * 1.5));
     } finally {
@@ -239,7 +237,10 @@ test("keeps each education year directly above its title", async ({ page }) => {
   }
 });
 
-test("renders the hero portrait without a stray frame line", async ({ page }) => {
+test("renders the hero portrait without a stray frame line", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name === "mobile", "The portrait is hidden on phones.");
   await page.goto("/");
   const portrait = await page.locator("#about figure").evaluate((figure) => {
     const foot = figure.closest("section")!.lastElementChild!.getBoundingClientRect();
@@ -436,15 +437,9 @@ test("reflows across narrow, wide and zoom-equivalent viewports", async ({
     if (height >= 740) {
       await expect(page.locator("#impact").getByText("Selected impact")).toBeInViewport();
     }
-    if (width <= 760) {
-      const portraitBounds = await page.locator("#about figure").boundingBox();
-      const summaryBounds = await page
-        .getByText(/^I build React\/TypeScript/)
-        .boundingBox();
-      expect(summaryBounds!.y).toBeGreaterThanOrEqual(
-        portraitBounds!.y + portraitBounds!.height,
-      );
-    }
+    const portrait = page.locator("#about figure");
+    if (width <= 760) await expect(portrait).toBeHidden();
+    else await expect(portrait).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath(`home-${width}.png`) });
     if (width === 1440 || width === 390) {
       for (const section of ["impact", "experience", "expertise", "contact"]) {

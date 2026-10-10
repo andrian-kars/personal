@@ -852,15 +852,8 @@
     padding-top: 2rem;
   }
   .heroInner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 130px;
-    grid-template-areas: "heading heading" "position portrait" "summary summary" "actions actions";
-    column-gap: 0.75rem;
     min-height: auto;
     padding-block: 30px 30px;
-  }
-  .heroHeading {
-    grid-area: heading;
   }
   .eyebrow {
     font-size: 0.75rem;
@@ -875,9 +868,7 @@
     margin-top: 0.3rem;
   }
   .heroPosition {
-    grid-area: position;
     margin-top: 1.5rem;
-    align-self: center;
   }
   .role {
     font-size: 1.2rem;
@@ -891,32 +882,14 @@
     margin-top: 0.4rem;
   }
   .portrait {
-    grid-area: portrait;
-    position: relative;
-    width: 100%;
-    height: 205px;
-    max-height: none;
-    align-self: end;
-    right: auto;
-    top: auto;
-    margin-top: 1rem;
-  }
-  .portrait picture {
-    height: 100%;
-  }
-  .portrait img {
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 0;
+    display: none;
   }
   .heroSummary {
-    grid-area: summary;
     font-size: 1rem;
     max-width: none;
     margin-top: 1rem;
   }
   .heroActions {
-    grid-area: actions;
     gap: 1.2rem;
     margin-top: 1.5rem;
   }
@@ -1014,17 +987,11 @@
 }
 
 @media (min-width: 601px) and (max-width: 760px) {
-  .heroInner {
-    grid-template-columns: minmax(0, 1fr) 180px;
-  }
   .heroHeading h1 {
     font-size: 3.5rem;
   }
   .heroHeading h1 span:last-child {
     font-size: 2.75rem;
-  }
-  .portrait {
-    height: 220px;
   }
 }
 
@@ -1033,7 +1000,6 @@
     padding-top: 1.5rem;
   }
   .heroInner {
-    grid-template-columns: minmax(0, 1fr) 100px;
     padding-block: 16px;
   }
   .heroHeading h1 {
@@ -1041,9 +1007,6 @@
   }
   .heroHeading h1 span:last-child {
     font-size: 1.875rem;
-  }
-  .portrait {
-    height: 170px;
   }
   .heroActions {
     gap: 0.5rem;
