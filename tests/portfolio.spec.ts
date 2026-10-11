@@ -282,7 +282,7 @@ test("serves the approved CV and downloads it", async ({ page, request }) => {
     createHash("sha256")
       .update(await response.body())
       .digest("hex"),
-  ).toBe("fa60e52f6f5b0a4c691b070be8695c716349127b8148c1e69f444a794a7948a9");
+  ).toBe("ba7e20198d72dd22b3409ee6a21149d3143696160038849f8948baf3d80af06b");
   await page.goto("/");
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download CV (PDF)", exact: true }).click();
@@ -331,8 +331,8 @@ test("publishes consistent metadata and generated images", async ({ page, reques
   expect(person.alumniOf).toEqual([
     { "@type": "CollegeOrUniversity", name: "Ivan Franko National University of Lviv" },
   ]);
-  expect(person.homeLocation.name).toBe("Europe");
-  expect(person.knowsLanguage).toEqual(["English", "German", "Japanese"]);
+  expect(person.homeLocation.name).toBe("Galicia, Spain");
+  expect(person.knowsLanguage).toEqual(["en", "de", "ja"]);
   expect(person.knowsAbout).toContain("React");
   expect(person.sameAs).toEqual([
     "https://www.linkedin.com/in/andrian-kars/",

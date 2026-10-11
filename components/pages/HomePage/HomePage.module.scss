@@ -628,6 +628,32 @@
   font-size: 1rem;
   margin-top: 1.3rem;
 }
+.contactFacts {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 520px;
+  margin: 1.5rem 0 0;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid #353a38;
+  list-style: none;
+  color: var(--dark-muted);
+  font-size: 0.9375rem;
+
+  li {
+    display: flex;
+    gap: 0.65rem;
+  }
+  svg {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: var(--accent-light);
+  }
+}
+.translationNote {
+  margin-top: 1rem;
+  color: #8b9692;
+  font-size: 0.8125rem;
+}
 .email {
   display: flex;
   align-items: center;
@@ -647,7 +673,7 @@
 .socialLinks {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.75rem;
+  gap: 0.25rem 1.75rem;
   margin-top: 1.5rem;
 }
 .socialLinks a {
@@ -1063,7 +1089,9 @@
   }
   .specialties,
   .role,
-  .eyebrow {
+  .eyebrow,
+  .contactFacts,
+  .translationNote {
     color: #333;
   }
   .section,

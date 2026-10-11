@@ -7,24 +7,18 @@ import {
   Bot,
   Download,
   Gauge,
+  Languages,
   Layers,
   MapPin,
   Plus,
   ShieldCheck,
   Users,
 } from "lucide-react";
-import {
-  aiWorkflow,
-  education,
-  experience,
-  impact,
-  languages,
-  metrics,
-  profile,
-  skillGroups,
-} from "@/data/portfolio";
+import { getContent } from "@/content";
+import type { Content } from "@/content/types";
 import portrait from "@/public/images/background/me.png";
 import styles from "./HomePage.module.scss";
+import { formatMonth, localePath, type Locale } from "@/i18n/config";
 
 const impactIcons = [Layers, Gauge, Users];
 const blankImage =
@@ -38,11 +32,11 @@ function SectionLabel({ number, children }: { number: string; children: string }
   );
 }
 
-function Portrait() {
+function Portrait({ description }: { description: string }) {
   const {
     props: { alt, ...image },
   } = getImageProps({
-    alt: "Andrian Karsanashvili wearing red glasses",
+    alt: description,
     src: portrait,
     sizes: "(max-width: 1100px) 365px, 490px",
     fetchPriority: "high",
@@ -58,14 +52,27 @@ function Portrait() {
   );
 }
 
-export function HomePage() {
+export function HomePage({ content, locale }: { content: Content; locale: Locale }) {
+  const {
+    profile,
+    aiWorkflow,
+    education,
+    experience,
+    impact,
+    languages,
+    metrics,
+    skillGroups,
+    ui,
+  } = content;
+  const otherLocale = locale === "en" ? "es" : "en";
+  const otherProfile = getContent(otherLocale).profile;
   return (
     <>
       <section id="about" className={styles.hero} aria-labelledby="name">
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroHeading}>
             <p className={styles.eyebrow}>
-              Full-stack engineering{" "}
+              {ui.eyebrow}{" "}
               <span className={styles.divider} aria-hidden="true">
                 /
               </span>{" "}
@@ -88,8 +95,8 @@ export function HomePage() {
           </div>
           <p className={styles.heroSummary}>{profile.summary}</p>
           <div className={styles.heroActions}>
-            <Link href="/#impact" className={styles.primaryLink}>
-              Explore my work <ArrowDown size={17} aria-hidden="true" />
+            <Link href={localePath(locale, "#impact")} className={styles.primaryLink}>
+              {ui.explore} <ArrowDown size={17} aria-hidden="true" />
             </Link>
             <a
               href={profile.linkedin}
@@ -97,23 +104,29 @@ export function HomePage() {
               rel="noopener noreferrer"
               className={styles.textLink}
             >
-              Get in touch <ArrowUpRight size={17} aria-hidden="true" />
-              <span className="sr-only"> on LinkedIn (opens in a new tab)</span>
+              {ui.contact} <ArrowUpRight size={17} aria-hidden="true" />
+              <span className="sr-only">
+                {" "}
+                {ui.onLinkedIn} {ui.newTab}
+              </span>
             </a>
           </div>
           <figure className={styles.portrait}>
-            <Portrait />
+            <Portrait description={ui.portrait} />
           </figure>
         </div>
         <div className={styles.heroFoot}>
           <div className={`container ${styles.heroFootInner}`}>
             <p>
-              <strong>{profile.experience} years</strong> of software engineering
+              <strong>
+                {profile.experience} {ui.years}
+              </strong>{" "}
+              {ui.engineering}
             </p>
             <p>
               <span className={styles.dot} aria-hidden="true" />
-              <strong>EPAM Systems</strong>
-              <span className={styles.since}>Since 2021</span>
+              <strong>{profile.employer}</strong>
+              <span className={styles.since}>{ui.since}</span>
             </p>
             <a href={`mailto:${profile.email}`}>
               {profile.email} <ArrowUpRight size={15} aria-hidden="true" />
@@ -126,17 +139,14 @@ export function HomePage() {
         <div className="container">
           <div className={styles.sectionIntro}>
             <div>
-              <SectionLabel number="01">Selected impact</SectionLabel>
+              <SectionLabel number="01">{ui.impact.label}</SectionLabel>
               <h2 id="impact-heading">
-                Good software.
+                {ui.impact.title[0]}
                 <br />
-                Better ways to build it.
+                {ui.impact.title[1]}
               </h2>
             </div>
-            <p>
-              Enterprise products, practical automation, and the work that makes a whole
-              team more effective.
-            </p>
+            <p>{ui.impact.summary}</p>
           </div>
           <article className={styles.aiFeature} aria-labelledby="ai-heading">
             <div className={styles.aiHeader}>
@@ -151,7 +161,7 @@ export function HomePage() {
             </div>
             <ol className={styles.aiSteps}>
               {aiWorkflow.steps.map((step, index) => (
-                <li key={step.title}>
+                <li key={step.id}>
                   <span className={styles.stepNumber} aria-hidden="true">
                     0{index + 1}
                   </span>
@@ -171,7 +181,7 @@ export function HomePage() {
             {impact.map((item, index) => {
               const Icon = impactIcons[index];
               return (
-                <article className={styles.block} key={item.category}>
+                <article className={styles.block} key={item.id}>
                   <div className={styles.impactCategory}>
                     {Icon && <Icon size={21} strokeWidth={1.5} aria-hidden="true" />}
                     <span>{item.category}</span>
@@ -189,14 +199,14 @@ export function HomePage() {
           </div>
           <dl className={styles.metrics}>
             {metrics.map((metric) => (
-              <div className={styles.metric} key={metric.label}>
+              <div className={styles.metric} key={metric.id}>
                 <dt>{metric.label}</dt>
                 <dd className={styles.metricValue}>
                   {metric.before && (
                     <>
                       <span className={styles.before}>{metric.before}</span>
                       <ArrowRight aria-hidden="true" />
-                      <span className="sr-only">to</span>
+                      <span className="sr-only">{ui.to}</span>
                     </>
                   )}
                   <span>{metric.value}</span>
@@ -215,40 +225,40 @@ export function HomePage() {
       >
         <div className={`container ${styles.experienceLayout}`}>
           <div className={styles.experienceIntro}>
-            <SectionLabel number="02">Experience</SectionLabel>
+            <SectionLabel number="02">{ui.experience.label}</SectionLabel>
             <h2 id="experience-heading">
-              Built over time.
+              {ui.experience.title[0]}
               <br />
-              Across the stack.
+              {ui.experience.title[1]}
             </h2>
-            <p>
-              From client applications to enterprise insurance software. Hands-on delivery
-              across React, .NET and Node.js, architecture decisions and shared
-              responsibility for quality.
-            </p>
+            <p>{ui.experience.summary}</p>
             <a
               href={profile.cv}
               download={profile.cvFileName}
               className={styles.inlineLink}
             >
-              The full story in my CV <Download size={16} aria-hidden="true" />
+              {ui.cvStory} <Download size={16} aria-hidden="true" />
             </a>
           </div>
           <ol className={styles.timeline}>
             {experience.map((entry) => (
               <li
-                key={`${entry.title}-${entry.context}`}
+                key={entry.id}
                 className={entry.dates?.end ? undefined : styles.ongoing}
               >
                 <p className={styles.period}>
                   {entry.dates ? (
                     <>
-                      <time dateTime={entry.dates.start}>{entry.dates.startLabel}</time>{" "}
+                      <time dateTime={entry.dates.start}>
+                        {formatMonth(entry.dates.start, ui.months)}
+                      </time>{" "}
                       &ndash;{" "}
                       {entry.dates.end ? (
-                        <time dateTime={entry.dates.end}>{entry.dates.endLabel}</time>
+                        <time dateTime={entry.dates.end}>
+                          {formatMonth(entry.dates.end, ui.months)}
+                        </time>
                       ) : (
-                        <span className={styles.current}>Present</span>
+                        <span className={styles.current}>{ui.present}</span>
                       )}
                     </>
                   ) : (
@@ -264,7 +274,7 @@ export function HomePage() {
                 {entry.highlights && (
                   <details className={styles.highlights}>
                     <summary>
-                      Highlights{" "}
+                      {ui.highlights}{" "}
                       <span className={styles.count}>({entry.highlights.length})</span>
                       <Plus size={16} aria-hidden="true" />
                     </summary>
@@ -289,21 +299,18 @@ export function HomePage() {
         <div className="container">
           <div className={styles.sectionIntro}>
             <div>
-              <SectionLabel number="03">Expertise</SectionLabel>
+              <SectionLabel number="03">{ui.expertise.label}</SectionLabel>
               <h2 id="expertise-heading">
-                The right tools.
+                {ui.expertise.title[0]}
                 <br />
-                And the judgment to use them.
+                {ui.expertise.title[1]}
               </h2>
             </div>
-            <p>
-              Full-stack range across React and .NET, with a practical, reviewable
-              approach to AI-assisted engineering.
-            </p>
+            <p>{ui.expertise.summary}</p>
           </div>
           <div className={styles.skillsGrid}>
             {skillGroups.map((group) => (
-              <article key={group.name} className={styles.block}>
+              <article key={group.id} className={styles.block}>
                 <h3>{group.name}</h3>
                 <p className={styles.blockDescription}>{group.description}</p>
                 <ul className={styles.tags}>
@@ -314,10 +321,10 @@ export function HomePage() {
               </article>
             ))}
             <article className={styles.block}>
-              <h3>Education &amp; development</h3>
+              <h3>{ui.education}</h3>
               <ul className={styles.entries}>
                 {education.map((item) => (
-                  <li key={item.title}>
+                  <li key={item.id}>
                     <p className={styles.period}>
                       <time dateTime={item.year}>{item.year}</time>
                     </p>
@@ -328,10 +335,10 @@ export function HomePage() {
               </ul>
             </article>
             <article className={styles.block}>
-              <h3>Languages</h3>
+              <h3>{ui.languages}</h3>
               <dl className={styles.languages}>
                 {languages.map((language) => (
-                  <div key={language.name}>
+                  <div key={language.code}>
                     <dt>{language.name}</dt>
                     <dd>{language.level}</dd>
                   </div>
@@ -345,13 +352,27 @@ export function HomePage() {
       <section id="contact" className={styles.contact} aria-labelledby="contact-heading">
         <div className={`container ${styles.contactInner}`}>
           <div>
-            <SectionLabel number="04">Get in touch</SectionLabel>
+            <SectionLabel number="04">{ui.contactLabel}</SectionLabel>
             <h2 id="contact-heading">
-              Let&apos;s talk about
+              {ui.contactTitle[0]}
               <br />
-              what comes next<span>.</span>
+              {ui.contactTitle[1]}
+              <span>.</span>
             </h2>
-            <p>Good engineering starts with a conversation.</p>
+            <p>{ui.contactSummary}</p>
+            <ul className={styles.contactFacts}>
+              <li>
+                <MapPin size={16} aria-hidden="true" />
+                <span>{ui.availability}</span>
+              </li>
+              <li>
+                <Languages size={16} aria-hidden="true" />
+                <span>{ui.communication}</span>
+              </li>
+            </ul>
+            {ui.translationNote && (
+              <p className={styles.translationNote}>{ui.translationNote}</p>
+            )}
           </div>
           <div className={styles.contactLinks}>
             <a className={styles.email} href={`mailto:${profile.email}`}>
@@ -361,14 +382,22 @@ export function HomePage() {
             <div className={styles.socialLinks}>
               <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
                 LinkedIn <ArrowUpRight size={16} aria-hidden="true" />
-                <span className="sr-only"> (opens in a new tab)</span>
+                <span className="sr-only"> {ui.newTab}</span>
               </a>
               <a href={profile.github} target="_blank" rel="noopener noreferrer">
                 GitHub <ArrowUpRight size={16} aria-hidden="true" />
-                <span className="sr-only"> (opens in a new tab)</span>
+                <span className="sr-only"> {ui.newTab}</span>
               </a>
               <a href={profile.cv} download={profile.cvFileName}>
                 CV <Download size={16} aria-hidden="true" />
+                <span className="sr-only"> (PDF)</span>
+              </a>
+              <a
+                href={otherProfile.cv}
+                download={otherProfile.cvFileName}
+                hrefLang={otherLocale}
+              >
+                {ui.otherCv} <Download size={16} aria-hidden="true" />
                 <span className="sr-only"> (PDF)</span>
               </a>
             </div>

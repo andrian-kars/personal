@@ -1,11 +1,9 @@
 import { ImageResponse } from "next/og";
-import { profile } from "@/data/portfolio";
+import { getContent } from "@/content";
+import type { Locale } from "@/i18n/config";
 
-export const alt = `${profile.name}, ${profile.role}. ${profile.specialties.join(", ")}.`;
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-
-export default function OpenGraphImage() {
+export function shareImage(locale: Locale) {
+  const { profile, ui } = getContent(locale);
   return new ImageResponse(
     <div
       style={{
@@ -71,10 +69,12 @@ export default function OpenGraphImage() {
           color: "#adb7b4",
         }}
       >
-        <span>7+ years of software engineering</span>
+        <span>
+          {profile.experience} {ui.years} {ui.engineering}
+        </span>
         <span>{profile.location}</span>
       </div>
     </div>,
-    size,
+    { width: 1200, height: 630 },
   );
 }

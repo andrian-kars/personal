@@ -1,6 +1,11 @@
 import type { MetadataRoute } from "next";
-import { profile } from "@/data/portfolio";
+import { localeUrl, locales } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [{ url: profile.url }];
+  const languages = {
+    en: localeUrl("en"),
+    es: localeUrl("es"),
+    "x-default": localeUrl("en"),
+  };
+  return locales.map((locale) => ({ url: localeUrl(locale), alternates: { languages } }));
 }

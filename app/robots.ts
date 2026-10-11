@@ -1,9 +1,12 @@
 import type { MetadataRoute } from "next";
-import { profile } from "@/data/portfolio";
+import { identity } from "@/data/portfolio";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/" },
-    sitemap: `${profile.url}/sitemap.xml`,
+    rules: {
+      userAgent: "*",
+      ...(process.env.VERCEL_ENV === "preview" ? { disallow: "/" } : { allow: "/" }),
+    },
+    sitemap: `${identity.url}/sitemap.xml`,
   };
 }

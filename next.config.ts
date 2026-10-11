@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   agentRules: false,
   devIndicators: false,
+  experimental: { globalNotFound: true },
   poweredByHeader: false,
   async redirects() {
     return [
@@ -10,6 +11,9 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/#about", permanent: true },
       { source: "/skills", destination: "/#expertise", permanent: true },
       { source: "/works", destination: "/#impact", permanent: true },
+      { source: "/es/about", destination: "/es#about", permanent: true },
+      { source: "/es/skills", destination: "/es#expertise", permanent: true },
+      { source: "/es/works", destination: "/es#impact", permanent: true },
     ];
   },
   async headers() {
