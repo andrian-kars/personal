@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { en } from "../content/en";
 import { es } from "../content/es";
-import { engagements, identity, measurements } from "../data/portfolio";
+import { engagements, identity, measurements, publicProjects } from "../data/portfolio";
 import { localeCookie, localePath, locales } from "../i18n/config";
 
 const sharedValues = new Set<string>();
@@ -11,7 +11,7 @@ const collect = (value: unknown) => {
   if (typeof value === "string") sharedValues.add(value);
   else if (value && typeof value === "object") Object.values(value).forEach(collect);
 };
-[identity, engagements, measurements].forEach(collect);
+[identity, engagements, measurements, publicProjects].forEach(collect);
 const sharedKeys = new Set(["id", "code", "year", "start", "end"]);
 // Proper names that deliberately stay in English on the Spanish page and CV.
 const intentionalEnglish = new Set([
@@ -135,6 +135,51 @@ test("negotiates only the root without caching preferences or looping", async ({
 for (const locale of locales) {
   const content = locale === "en" ? en : es;
   const path = localePath(locale);
+  test(`${locale}: case studies expose contributions, outcomes and the public project`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    for (const item of content.impact) {
+      const study = page.getByRole("article", { name: item.title, exact: true });
+      await expect(study.getByRole("heading", { level: 4 })).toHaveText([
+        content.ui.caseStudy.challenge,
+        content.ui.caseStudy.contribution,
+        content.ui.caseStudy.result,
+      ]);
+      await expect(study).toContainText(item.description);
+      await expect(study.locator("li")).toHaveText(item.evidence);
+      await expect(study).toContainText(item.result);
+      if (item.link) {
+        const link = study.getByRole("link", {
+          name: new RegExp(item.link.label),
+        });
+        await expect(link).toHaveAttribute("href", item.link.href);
+        await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      }
+      if (item.imageAlt) {
+        const image = study.getByAltText(item.imageAlt);
+        await image.scrollIntoViewIfNeeded();
+        await expect
+          .poll(() =>
+            image.evaluate(
+              (element: HTMLImageElement) => element.complete && element.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+        const { rendered, natural } = await image.evaluate(
+          (element: HTMLImageElement) => ({
+            rendered: element.clientWidth / element.clientHeight,
+            natural: element.naturalWidth / element.naturalHeight,
+          }),
+        );
+        expect(rendered).toBeCloseTo(natural, 1);
+      }
+    }
+    await expect(page.locator("#experience ul").last().locator("li")).toHaveText(
+      content.ui.experience.crossProject.items,
+    );
+  });
+
   test(`${locale}: downloads the matching verified CV`, async ({ page, request }) => {
     const response = await request.get(content.profile.cv, {
       headers: { "Accept-Language": locale === "en" ? "es" : "en" },
@@ -142,8 +187,8 @@ for (const locale of locales) {
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("application/pdf");
     const hashes = {
-      en: "ba7e20198d72dd22b3409ee6a21149d3143696160038849f8948baf3d80af06b",
-      es: "d30b1d8a6c27c6e99a9735c492a7c06305839f84ae1485cc7a758c3016fee62f",
+      en: "51803cb6c62aff20c2aa1049f5ba547767f43372e7f9637bdc2e8e5bd446d3a1",
+      es: "59fbe23516f6b186e5957f9e1e75a2af38371f9c5a4449773d036483f8f061fb",
     };
     expect(
       createHash("sha256")

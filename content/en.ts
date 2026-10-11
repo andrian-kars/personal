@@ -1,4 +1,4 @@
-import { engagements, identity, measurements } from "@/data/portfolio";
+import { engagements, identity, measurements, publicProjects } from "@/data/portfolio";
 
 export const profile = {
   ...identity,
@@ -8,7 +8,7 @@ export const profile = {
   cv: "/andrian-kars-cv.pdf",
   cvFileName: "Andrian-Karsanashvili-CV.pdf",
   summary:
-    "I build React/TypeScript interfaces and C#/.NET services, and set up AI-agent workflows for analysis, delivery and review, with people making the final call.",
+    "I modernize complex software across React, TypeScript and .NET, from legacy business rules to reliable production workflows.",
   description:
     "Senior full-stack engineer in Galicia, Spain, with 7+ years of React, TypeScript and C#/.NET and hands-on AI-agent workflows. Open to roles across Europe.",
 } as const;
@@ -17,7 +17,7 @@ export const aiWorkflow = {
   category: "AI-assisted engineering",
   title: "AI agents with clear handoffs. People make the calls.",
   description:
-    "On the Sagitta modernization, I configured GitHub Copilot agents and reusable repository instructions that carry work from legacy analysis to review, with explicit handoffs and build and test checks.",
+    "On Sagitta, I configured GitHub Copilot agents and repository instructions for each delivery stage, with build and test checks before human review.",
   steps: [
     {
       id: "analysis",
@@ -46,51 +46,56 @@ export const aiWorkflow = {
 } as const;
 
 type Impact = {
-  id: "delivery" | "architecture" | "team";
+  id: "modernization" | "architecture" | "antelu";
   category: string;
   title: string;
   description: string;
   evidence: string[];
+  result: string;
+  link?: { href: string; label: string };
+  imageAlt?: string;
 };
 
 export const impact: readonly Impact[] = [
   {
-    id: "delivery",
-    category: "Full-stack delivery",
-    title: "From legacy data to modern UI.",
+    id: "modernization",
+    category: "Sagitta / Browser modernization",
+    title: "A future beyond Internet Explorer.",
     description:
-      "I work across React, TypeScript and C#/ASP.NET Core, so fixes land where the problem actually is.",
+      "A 30-year-old enterprise product with more than 1,000 pages only worked in Internet Explorer. Its retirement put continued access to the product at risk.",
     evidence: [
-      "Modernized legacy ASP administration workflows into React and TypeScript forms, drawers and grids, preserving business rules.",
-      "Corrected C#/ASP.NET Core API behavior, repository logic and data mappings behind save failures and inconsistent values.",
-      "Built masked credential flows and integrated claims-based permissions and multi-factor authentication configuration.",
-      "Owned certificate generation, download, import and in-app PDF previews end to end.",
+      "Made legacy workflows work in modern browsers, replacing VBScript with cross-browser JavaScript and resolving IE-specific CSS behavior.",
+      "Updated the visual design, then migrated workflows to React and TypeScript while preserving existing business rules.",
     ],
+    result: "Kept the product usable beyond IE and modernized its workflows in React.",
   },
   {
     id: "architecture",
-    category: "Performance & architecture",
-    title: "Less friction. More forward motion.",
+    category: "Sagitta / Architecture",
+    title: "Challenging an agreed decision.",
     description:
-      "I make existing software easier to change, faster to build and safer to release.",
+      "An enterprise product built by seven teams of five engineers across Ukraine, India and the US. The agreed approach kept tokens in the ASP business layer and was estimated at 18 months to implement.",
     evidence: [
-      "Modernized a legacy UI stack, removing blockers that had stalled feature delivery across multiple product teams.",
-      "Built a reusable component library shared across products, improving UI consistency.",
-      "Migrated VBScript to cross-browser JavaScript and stabilized IE quirks-mode CSS without breaking the existing experience.",
-      "Improved CI/CD pipeline speed by over 200% for faster, more reliable releases.",
+      "Identified that any navigation bypassing the custom code, including page refresh and browser back/forward, would lose the token.",
+      "Challenged the decision after it had been agreed and proposed the standard token management most web applications use. The approach was changed.",
     ],
+    result:
+      "Delivered in six months instead of the estimated 18, saving a year of work for seven teams. Page refresh and browser navigation worked correctly.",
   },
   {
-    id: "team",
-    category: "Team & delivery",
-    title: "Stronger teams. Steadier releases.",
-    description: "Good delivery is a team habit. I help build it beyond my own tickets.",
+    id: "antelu",
+    category: "Antelu / Public website & CMS",
+    title: "A catalogue the business can maintain.",
+    description:
+      "A children's vehicle-rental business needed a multilingual catalogue with clear enquiry routes and a way to manage vehicles and photos without editing source files.",
     evidence: [
-      "Mentored engineers from junior to senior levels, improving onboarding and code quality.",
-      "Coached other teams on development practices and improved Agile workflows to stabilize delivery.",
-      "Built tooling that fetches recorded hours from the management tool and submits team time reports automatically, replacing manual entry.",
-      "Coordinated AI-assisted Playwright test improvements and code reviews across teams.",
+      "Built the Next.js and TypeScript site in Spanish, Galician, English and Ukrainian, with catalogue filters, vehicle pages and direct phone/WhatsApp enquiries.",
+      "Integrated Sveltia CMS for vehicles and gallery photos, with image optimization on upload and content validation before publishing.",
     ],
+    result:
+      "Vehicles and photos can be maintained in a browser-based editor. Changes are versioned in Git and deployed through validated builds, without a separate content database.",
+    link: { href: publicProjects.antelu.url, label: "Visit Antelu" },
+    imageAlt: "Antelu website showing its vehicle-rental catalogue",
   },
 ];
 
@@ -104,22 +109,22 @@ type Metric = {
 
 export const metrics: readonly Metric[] = [
   {
-    id: "savings",
-    ...measurements.savings,
-    label: "Engineering effort saved",
-    note: "Identified and stopped a risky architectural direction; the release shipped defect-free.",
+    id: "delivery",
+    ...measurements.delivery,
+    label: "Implementation time (months)",
+    note: "Original estimate vs. delivery after I challenged the token-management approach.",
+  },
+  {
+    id: "pipeline",
+    ...measurements.pipeline,
+    label: "Faster CI/CD pipeline",
+    note: "Improved the Sagitta pipeline for faster, more reliable releases.",
   },
   {
     id: "builds",
     ...measurements.builds,
     label: "Webpack build time",
     note: "Reworked Webpack configuration and build tooling on Sagitta.",
-  },
-  {
-    id: "renders",
-    ...measurements.renders,
-    label: "Redundant UI renders",
-    note: "Standardized Redux state flows and reorganized the frontend on Sagitta.",
   },
 ];
 
@@ -142,7 +147,7 @@ export const experience: readonly Experience[] = [
     context: "Selected recent work",
     label: "Recent work",
     summary:
-      "Modernized legacy ASP administration workflows with React, TypeScript and C#/ASP.NET Core, using GitHub Copilot agents for analysis, implementation and review behind human review gates.",
+      "Delivering administration workflows across React, TypeScript and C#/ASP.NET Core, from forms and permissions to API behavior and regression coverage.",
     highlights: [
       "Modernized legacy ASP administration workflows with React and TypeScript: validated forms, editable drawers and searchable grids that preserve business rules.",
       "Developed and corrected C#/ASP.NET Core API behavior, repository logic and data mappings, fixing save failures, date conversion and inconsistent field values.",
@@ -185,7 +190,7 @@ export const experience: readonly Experience[] = [
     title: "Full-Stack Engineer",
     context: "Sagitta",
     summary:
-      "Cut build times from ~40s to 15–18s and redundant renders from nine to one. Shipped API endpoints and hotfixes for legacy database integration, and migrated VBScript to cross-browser JavaScript.",
+      "Cut build times from ~40s to 15–18s, sped up the CI/CD pipeline by over 200% and reduced redundant renders from nine to one. Shipped API endpoints and hotfixes for legacy database integration, and migrated VBScript to cross-browser JavaScript.",
   },
   {
     id: "independent",
@@ -300,7 +305,6 @@ export const ui = {
   portrait: "Andrian Karsanashvili resting his chin on his hand",
   explore: "Explore my work",
   contact: "Get in touch",
-  onLinkedIn: "on LinkedIn",
   newTab: "(opens in a new tab)",
   years: "years",
   engineering: "of software engineering",
@@ -311,15 +315,28 @@ export const ui = {
   translationNote: null as string | null,
   impact: {
     label: "Selected impact",
-    title: ["Good software.", "Better ways to build it."],
+    title: ["Real problems.", "Decisions that made a difference."],
     summary:
-      "Enterprise products, practical automation, and the work that makes a whole team more effective.",
+      "Browser modernization, architectural judgment and a public website with owner-managed content.",
+  },
+  caseStudy: {
+    challenge: "The challenge",
+    contribution: "My contribution",
+    result: "The result",
   },
   experience: {
     label: "Experience",
     title: ["Built over time.", "Across the stack."],
     summary:
       "From client applications to enterprise insurance software. Hands-on delivery across React, .NET and Node.js, architecture decisions and shared responsibility for quality.",
+    crossProject: {
+      label: "Across projects",
+      items: [
+        "Mentored engineers from junior to senior levels, improving onboarding and code quality.",
+        "Coached teams on development practices and Agile workflows to stabilize delivery.",
+        "Built tooling that fetches recorded hours and submits team time reports automatically.",
+      ],
+    },
   },
   expertise: {
     label: "Expertise",

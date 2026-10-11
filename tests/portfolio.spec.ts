@@ -16,11 +16,15 @@ test("shows the agreed identity and evidence without browser errors", async ({
   );
   await expect(page.locator("#about")).toContainText("Senior Full-Stack Engineer");
   await expect(page.locator("#about li").first()).toHaveText("AI-assisted engineering");
-  await expect(page.locator("#impact article").first()).toContainText("human review");
-  await expect(page.locator("#impact")).toContainText(
+  await expect(page.locator("#ai-heading")).toContainText("People make the calls");
+  await expect(page.locator("#experience")).toContainText(
     "submits team time reports automatically",
   );
-  await expect(page.locator("#impact")).toContainText("$200K+");
+  await expect(page.locator("#impact dl")).toContainText("200%+");
+  await expect(page.locator("#case-architecture")).toContainText(
+    "seven teams of five engineers",
+  );
+  await expect(page.locator("#impact")).not.toContainText("$200K");
   await expect(page.locator("#experience")).toContainText("Senior Full-Stack Developer");
   await expect(page.locator("#expertise")).toContainText("ASP.NET Core");
   expect(errors).toEqual([]);
@@ -28,7 +32,9 @@ test("shows the agreed identity and evidence without browser errors", async ({
 
 test("presents the AI workflow in order with a human review gate", async ({ page }) => {
   await page.goto("/");
-  const workflow = page.locator("#impact article").first();
+  const workflow = page.getByRole("article", {
+    name: "AI agents with clear handoffs. People make the calls.",
+  });
   await expect(workflow.getByRole("heading", { level: 3 })).toHaveText(
     "AI agents with clear handoffs. People make the calls.",
   );
@@ -67,6 +73,23 @@ test("keeps every in-page link pointed at a unique, existing target", async ({
   expect(duplicates).toEqual([]);
 });
 
+test("hero contact action stays on the current language page", async ({ page }) => {
+  for (const [path, label] of [
+    ["/", "Get in touch"],
+    ["/es", "Contactar"],
+  ]) {
+    await page.goto(path);
+    const contact = page
+      .locator("#about")
+      .getByRole("link", { name: label, exact: true });
+    await expect(contact).toHaveAttribute("href", `${path}#contact`);
+    await expect(contact).not.toHaveAttribute("target", "_blank");
+    await contact.click();
+    await expect(page).toHaveURL(new RegExp(`${path}#contact$`));
+    await expect(page.locator('#contact a[href^="mailto:"]')).toBeInViewport();
+  }
+});
+
 test("skips the portrait on phones and serves a right-sized one to desktops", async ({
   browser,
   baseURL,
@@ -80,7 +103,13 @@ test("skips the portrait on phones and serves a right-sized one to desktops", as
       const page = await context.newPage();
       const portraitRequests: string[] = [];
       page.on("request", (request) => {
-        if (request.url().includes("/_next/image")) portraitRequests.push(request.url());
+        const url = new URL(request.url());
+        if (
+          url.pathname === "/_next/image" &&
+          url.searchParams.get("url")?.includes("/me.")
+        ) {
+          portraitRequests.push(request.url());
+        }
       });
       await page.goto("/", { waitUntil: "load" });
       const image = page.getByAltText(
@@ -173,25 +202,31 @@ test("navigation lands each section directly under the sticky header", async ({
   }
 });
 
-test("aligns impact columns and metrics with identical dividers", async ({ page }) => {
+test("puts metrics and case studies before the AI workflow", async ({ page }) => {
   await page.goto("/");
   const layout = await page.evaluate(() => {
-    const blocks = [...document.querySelectorAll("#impact article")].slice(1);
-    const metrics = [...document.querySelectorAll("#impact dl > div")];
-    const left = (element: Element) => Math.round(element.getBoundingClientRect().left);
-    const border = (element: Element) => {
-      const style = getComputedStyle(element);
-      return `${style.borderTopWidth} ${style.borderTopStyle} ${style.borderTopColor}`;
-    };
+    const metrics = document.querySelector("#impact dl")!;
+    const cases = [...document.querySelectorAll("#impact article[id^='case-']")];
+    const workflow = document.querySelector("#ai-heading")!.closest("article")!;
+    const precedes = (first: Element, second: Element) =>
+      Boolean(first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING);
     return {
-      blockLefts: blocks.map(left),
-      metricLefts: metrics.map(left),
-      borders: [...blocks, ...metrics].map(border),
+      cases: cases.map((element) => element.id),
+      metricsFirst: precedes(metrics, cases[0]),
+      workflowLast: cases.every((element) => precedes(element, workflow)),
+      noOverlap:
+        metrics.getBoundingClientRect().bottom <= cases[0].getBoundingClientRect().top,
     };
   });
-  expect(layout.blockLefts).toHaveLength(3);
-  expect(layout.metricLefts).toEqual(layout.blockLefts);
-  expect(new Set(layout.borders).size).toBe(1);
+  expect(layout.cases).toEqual([
+    "case-modernization",
+    "case-architecture",
+    "case-antelu",
+  ]);
+  expect(layout.metricsFirst).toBe(true);
+  expect(layout.workflowLast).toBe(true);
+  expect(layout.noOverlap).toBe(true);
+  await expect(page.locator("#impact dl > div")).toHaveCount(3);
 });
 
 test("lists every role in one consistent timeline", async ({ page }) => {
@@ -283,7 +318,7 @@ test("serves the approved CV and downloads it", async ({ page, request }) => {
     createHash("sha256")
       .update(await response.body())
       .digest("hex"),
-  ).toBe("ba7e20198d72dd22b3409ee6a21149d3143696160038849f8948baf3d80af06b");
+  ).toBe("51803cb6c62aff20c2aa1049f5ba547767f43372e7f9637bdc2e8e5bd446d3a1");
   await page.goto("/");
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download CV (PDF)", exact: true }).click();
@@ -357,13 +392,9 @@ test("publishes consistent metadata and generated images", async ({ page, reques
 test("has usable public contact links", async ({ page }) => {
   await page.goto("/");
   const hero = page.locator("#about");
-  const getInTouch = hero.getByRole("link", { name: /^Get in touch on LinkedIn/ });
-  await expect(getInTouch).toHaveAttribute(
-    "href",
-    "https://www.linkedin.com/in/andrian-kars/",
-  );
-  await expect(getInTouch).toHaveAttribute("target", "_blank");
-  await expect(getInTouch).toHaveAttribute("rel", "noopener noreferrer");
+  const getInTouch = hero.getByRole("link", { name: "Get in touch", exact: true });
+  await expect(getInTouch).toHaveAttribute("href", "/#contact");
+  await expect(getInTouch).not.toHaveAttribute("target", "_blank");
   await expect(hero.locator('a[href^="mailto:"]')).toHaveAttribute(
     "href",
     "mailto:andrian.karsanashvili@gmail.com",
@@ -421,6 +452,9 @@ test("core content and disclosure work without JavaScript", async ({
     await page.locator("summary").click();
     await expect(page.locator("details ul")).toBeVisible();
     await expect(page.locator('#contact a[href^="mailto:"]')).toBeVisible();
+    await expect(page.locator("#case-modernization")).toContainText("Internet Explorer");
+    await expect(page.locator("#case-architecture")).toContainText("page refresh");
+    await expect(page.locator("#case-antelu")).toContainText("Sveltia CMS");
   } finally {
     await context.close();
   }

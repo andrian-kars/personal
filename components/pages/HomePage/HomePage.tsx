@@ -1,4 +1,4 @@
-import { getImageProps } from "next/image";
+import Image, { getImageProps, type StaticImageData } from "next/image";
 import Link from "next/link";
 import {
   ArrowDown,
@@ -6,21 +6,30 @@ import {
   ArrowUpRight,
   Bot,
   Download,
-  Gauge,
+  KeyRound,
   Languages,
   Layers,
   MapPin,
+  PanelsTopLeft,
   Plus,
   ShieldCheck,
-  Users,
+  type LucideIcon,
 } from "lucide-react";
 import { getContent } from "@/content";
 import type { Content } from "@/content/types";
 import portrait from "@/public/images/background/me.png";
+import anteluScreenshot from "@/public/images/projects/antelu.webp";
 import styles from "./HomePage.module.scss";
 import { formatMonth, localePath, type Locale } from "@/i18n/config";
 
-const impactIcons = [Layers, Gauge, Users];
+const impactIcons: Record<string, LucideIcon | undefined> = {
+  modernization: Layers,
+  architecture: KeyRound,
+  antelu: PanelsTopLeft,
+};
+const projectImages: Record<string, StaticImageData | undefined> = {
+  antelu: anteluScreenshot,
+};
 const blankImage =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
@@ -98,18 +107,9 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
             <Link href={localePath(locale, "#impact")} className={styles.primaryLink}>
               {ui.explore} <ArrowDown size={17} aria-hidden="true" />
             </Link>
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.textLink}
-            >
-              {ui.contact} <ArrowUpRight size={17} aria-hidden="true" />
-              <span className="sr-only">
-                {" "}
-                {ui.onLinkedIn} {ui.newTab}
-              </span>
-            </a>
+            <Link href={localePath(locale, "#contact")} className={styles.textLink}>
+              {ui.contact} <ArrowDown size={17} aria-hidden="true" />
+            </Link>
           </div>
           <figure className={styles.portrait}>
             <Portrait description={ui.portrait} />
@@ -148,6 +148,83 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
             </div>
             <p>{ui.impact.summary}</p>
           </div>
+          <dl className={styles.metrics}>
+            {metrics.map((metric) => (
+              <div className={styles.metric} key={metric.id}>
+                <dt>{metric.label}</dt>
+                <dd className={styles.metricValue}>
+                  {metric.before && (
+                    <>
+                      <span className={styles.before}>{metric.before}</span>
+                      <ArrowRight aria-hidden="true" />
+                      <span className="sr-only">{ui.to}</span>
+                    </>
+                  )}
+                  <span>{metric.value}</span>
+                </dd>
+                <dd className={styles.metricNote}>{metric.note}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className={styles.caseStudies}>
+            {impact.map((item) => {
+              const Icon = impactIcons[item.id];
+              const screenshot = projectImages[item.id];
+              return (
+                <article
+                  className={styles.caseStudy}
+                  key={item.id}
+                  id={`case-${item.id}`}
+                  aria-labelledby={`case-${item.id}-heading`}
+                >
+                  <div className={styles.caseIntro}>
+                    <p className={styles.impactCategory}>
+                      {Icon && <Icon size={21} strokeWidth={1.5} aria-hidden="true" />}
+                      <span>{item.category}</span>
+                    </p>
+                    <h3 id={`case-${item.id}-heading`}>{item.title}</h3>
+                    {screenshot && item.imageAlt && (
+                      <Image
+                        className={styles.projectImage}
+                        src={screenshot}
+                        alt={item.imageAlt}
+                        sizes="(max-width: 850px) 100vw, (max-width: 1100px) 40vw, 500px"
+                      />
+                    )}
+                    {item.link && (
+                      <a
+                        href={item.link.href}
+                        className={styles.projectLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.link.label} <ArrowUpRight size={16} aria-hidden="true" />
+                        <span className="sr-only"> {ui.newTab}</span>
+                      </a>
+                    )}
+                  </div>
+                  <div className={styles.caseBody}>
+                    <div>
+                      <h4>{ui.caseStudy.challenge}</h4>
+                      <p>{item.description}</p>
+                    </div>
+                    <div>
+                      <h4>{ui.caseStudy.contribution}</h4>
+                      <ul>
+                        {item.evidence.map((evidence) => (
+                          <li key={evidence}>{evidence}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className={styles.caseResult}>
+                      <h4>{ui.caseStudy.result}</h4>
+                      <p>{item.result}</p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
           <article className={styles.aiFeature} aria-labelledby="ai-heading">
             <div className={styles.aiHeader}>
               <div>
@@ -177,44 +254,6 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
               </span>
             </p>
           </article>
-          <div className={styles.impactGrid}>
-            {impact.map((item, index) => {
-              const Icon = impactIcons[index];
-              return (
-                <article className={styles.block} key={item.id}>
-                  <div className={styles.impactCategory}>
-                    {Icon && <Icon size={21} strokeWidth={1.5} aria-hidden="true" />}
-                    <span>{item.category}</span>
-                  </div>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <ul>
-                    {item.evidence.map((evidence) => (
-                      <li key={evidence}>{evidence}</li>
-                    ))}
-                  </ul>
-                </article>
-              );
-            })}
-          </div>
-          <dl className={styles.metrics}>
-            {metrics.map((metric) => (
-              <div className={styles.metric} key={metric.id}>
-                <dt>{metric.label}</dt>
-                <dd className={styles.metricValue}>
-                  {metric.before && (
-                    <>
-                      <span className={styles.before}>{metric.before}</span>
-                      <ArrowRight aria-hidden="true" />
-                      <span className="sr-only">{ui.to}</span>
-                    </>
-                  )}
-                  <span>{metric.value}</span>
-                </dd>
-                <dd className={styles.metricNote}>{metric.note}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
@@ -240,54 +279,64 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
               {ui.cvStory} <Download size={16} aria-hidden="true" />
             </a>
           </div>
-          <ol className={styles.timeline}>
-            {experience.map((entry) => (
-              <li
-                key={entry.id}
-                className={entry.dates?.end ? undefined : styles.ongoing}
-              >
-                <p className={styles.period}>
-                  {entry.dates ? (
-                    <>
-                      <time dateTime={entry.dates.start}>
-                        {formatMonth(entry.dates.start, ui.months)}
-                      </time>{" "}
-                      &ndash;{" "}
-                      {entry.dates.end ? (
-                        <time dateTime={entry.dates.end}>
-                          {formatMonth(entry.dates.end, ui.months)}
-                        </time>
-                      ) : (
-                        <span className={styles.current}>{ui.present}</span>
-                      )}
-                    </>
-                  ) : (
-                    <span className={styles.current}>{entry.label}</span>
+          <div>
+            <ol className={styles.timeline}>
+              {experience.map((entry) => (
+                <li
+                  key={entry.id}
+                  className={entry.dates?.end ? undefined : styles.ongoing}
+                >
+                  <p className={styles.period}>
+                    {entry.dates ? (
+                      <>
+                        <time dateTime={entry.dates.start}>
+                          {formatMonth(entry.dates.start, ui.months)}
+                        </time>{" "}
+                        &ndash;{" "}
+                        {entry.dates.end ? (
+                          <time dateTime={entry.dates.end}>
+                            {formatMonth(entry.dates.end, ui.months)}
+                          </time>
+                        ) : (
+                          <span className={styles.current}>{ui.present}</span>
+                        )}
+                      </>
+                    ) : (
+                      <span className={styles.current}>{entry.label}</span>
+                    )}
+                  </p>
+                  <h3>{entry.title}</h3>
+                  <p className={styles.organization}>
+                    {entry.organization} <span aria-hidden="true">&middot;</span>{" "}
+                    <span className={styles.context}>{entry.context}</span>
+                  </p>
+                  <p className={styles.summary}>{entry.summary}</p>
+                  {entry.highlights && (
+                    <details className={styles.highlights}>
+                      <summary>
+                        {ui.highlights}{" "}
+                        <span className={styles.count}>({entry.highlights.length})</span>
+                        <Plus size={16} aria-hidden="true" />
+                      </summary>
+                      <ul>
+                        {entry.highlights.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </details>
                   )}
-                </p>
-                <h3>{entry.title}</h3>
-                <p className={styles.organization}>
-                  {entry.organization} <span aria-hidden="true">&middot;</span>{" "}
-                  <span className={styles.context}>{entry.context}</span>
-                </p>
-                <p className={styles.summary}>{entry.summary}</p>
-                {entry.highlights && (
-                  <details className={styles.highlights}>
-                    <summary>
-                      {ui.highlights}{" "}
-                      <span className={styles.count}>({entry.highlights.length})</span>
-                      <Plus size={16} aria-hidden="true" />
-                    </summary>
-                    <ul>
-                      {entry.highlights.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </details>
-                )}
-              </li>
-            ))}
-          </ol>
+                </li>
+              ))}
+            </ol>
+            <div className={styles.crossProject}>
+              <h3>{ui.experience.crossProject.label}</h3>
+              <ul>
+                {ui.experience.crossProject.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 

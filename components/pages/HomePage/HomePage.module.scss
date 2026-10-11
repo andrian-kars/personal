@@ -231,7 +231,6 @@
 .aiFeature {
   display: grid;
   gap: 2.25rem;
-  margin-bottom: 4rem;
   padding: 2.75rem 3rem 2.5rem;
   color: #f4f5f0;
   background: var(--dark);
@@ -329,7 +328,6 @@
   }
 }
 
-.impactGrid,
 .metrics,
 .skillsGrid {
   display: grid;
@@ -360,20 +358,9 @@
   color: var(--teal);
   margin-bottom: 1.5rem;
 }
-.impactGrid .block {
-  > h3 {
-    max-width: 290px;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    line-height: 1.3;
-  }
-  > p {
-    color: var(--muted);
-    font-size: 1rem;
-  }
-}
-.impactGrid .block ul,
-.highlights ul {
+.highlights ul,
+.caseBody ul,
+.crossProject ul {
   list-style: none;
   margin: 1.25rem 0 0;
   padding: 0;
@@ -397,7 +384,7 @@
 }
 
 .metrics {
-  margin: 3.5rem 0 0;
+  margin: 0 0 3.5rem;
 }
 .metric {
   display: flex;
@@ -434,6 +421,81 @@
   color: var(--muted);
   font-size: 0.875rem;
   line-height: 1.5;
+}
+
+.caseStudies {
+  display: grid;
+  gap: 3.5rem;
+  margin-bottom: 4rem;
+}
+.caseStudy {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 3.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 2rem;
+}
+.caseIntro h3 {
+  max-width: 400px;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.projectImage {
+  width: 100%;
+  height: auto;
+  margin-top: 1.75rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+.projectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  margin-top: 0.75rem;
+  color: var(--teal);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.caseBody {
+  color: var(--muted);
+  font-size: 1rem;
+
+  > div + div {
+    margin-top: 1.5rem;
+  }
+  h4 {
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  ul {
+    margin: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+  li:first-child {
+    margin-top: 0;
+  }
+}
+.caseResult {
+  border-left: 2px solid var(--teal);
+  padding-left: 1.25rem;
+}
+
+.crossProject {
+  margin: 2.5rem 0 0 5px;
+  padding: 1.75rem 0 0 1.75rem;
+  border-top: 1px solid #bdcbc2;
+
+  h3 {
+    font-size: 1.125rem;
+  }
+  ul {
+    margin-top: 0.5rem;
+  }
 }
 
 .experienceSection {
@@ -741,12 +803,11 @@
   .experienceLayout {
     gap: 3rem;
   }
-  .impactGrid,
   .metrics {
     column-gap: 1.5rem;
   }
-  .impactGrid .block > h3 {
-    font-size: 1.35rem;
+  .caseStudy {
+    gap: 2rem;
   }
   .metricValue {
     font-size: 2rem;
@@ -811,22 +872,20 @@
   .sectionIntro > p {
     max-width: 240px;
   }
-  .impactGrid,
   .metrics {
     grid-template-columns: 1fr;
     row-gap: 2rem;
   }
-  .impactGrid .block > h3 {
-    max-width: none;
+  .caseStudy {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .caseIntro h3 {
+    max-width: 560px;
     font-size: 1.5rem;
   }
   .impactCategory {
     margin-bottom: 0.8rem;
-  }
-  .impactGrid .block ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 2rem;
   }
   .metricNote {
     max-width: 520px;
@@ -962,14 +1021,15 @@
   .sectionLabel {
     margin-bottom: 1rem;
   }
-  .impactGrid .block ul {
-    display: block;
+  .caseStudies {
+    gap: 2.5rem;
+    margin-bottom: 3rem;
   }
   .block {
     padding-top: 1.25rem;
   }
   .metrics {
-    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
   }
   .metric dt {
     font-size: 0.8125rem;
@@ -983,7 +1043,6 @@
   }
   .aiFeature {
     margin-inline: calc(var(--gutter) * -1);
-    margin-bottom: 3rem;
     padding: 2rem var(--gutter) 1.75rem;
     border-radius: 0;
   }
@@ -997,6 +1056,9 @@
     font-size: 1.125rem;
   }
   .timeline > li {
+    padding-left: 1.25rem;
+  }
+  .crossProject {
     padding-left: 1.25rem;
   }
   .skillsGrid {
@@ -1112,12 +1174,12 @@
     position: static;
     margin-bottom: 1rem;
   }
-  .impactGrid {
+  .caseStudy {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .impactGrid .block ul {
-    display: block;
+  .projectImage {
+    max-width: 300px;
   }
   .timeline > li {
     break-inside: avoid;

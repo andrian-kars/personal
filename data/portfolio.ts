@@ -33,7 +33,11 @@ export const engagements = {
 } as const;
 
 export const measurements = {
-  savings: { value: "$200K+" },
+  delivery: { before: "18", value: "6" },
+  pipeline: { value: "200%+" },
   builds: { before: "~40s", value: "15–18s" },
-  renders: { before: "9", value: "1" },
+} as const;
+
+export const publicProjects = {
+  antelu: { url: "https://antelu.es" },
 } as const;

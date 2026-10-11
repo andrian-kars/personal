@@ -1,4 +1,4 @@
-import { engagements, identity, measurements } from "@/data/portfolio";
+import { engagements, identity, measurements, publicProjects } from "@/data/portfolio";
 import { en } from "./en";
 import type { Content, Ids } from "./types";
 
@@ -27,41 +27,43 @@ const steps: Record<
 };
 
 const impact: Record<Ids<typeof en.impact>, Omit<Item<Content["impact"]>, "id">> = {
-  delivery: {
-    category: "Desarrollo full-stack",
-    title: "De los datos heredados a interfaces modernas.",
+  modernization: {
+    category: "Sagitta / Modernización para navegadores",
+    title: "Un futuro más allá de Internet Explorer.",
     description:
-      "Trabajo con React, TypeScript y C#/ASP.NET Core para resolver los problemas allí donde se originan.",
+      "Un producto empresarial de 30 años con más de 1000 páginas solo funcionaba en Internet Explorer. La retirada del navegador ponía en riesgo el acceso al producto.",
     evidence: [
-      "Modernicé flujos administrativos de ASP heredado con formularios, paneles y tablas en React y TypeScript, conservando las reglas de negocio.",
-      "Corregí el comportamiento de las API de C#/ASP.NET Core, la lógica de los repositorios y los mapeos de datos que provocaban errores de guardado y valores incoherentes.",
-      "Implementé flujos de credenciales enmascaradas e integré permisos basados en claims y la configuración de autenticación multifactor.",
-      "Fui responsable de la generación, descarga, importación y previsualización de certificados PDF dentro de la aplicación.",
+      "Adapté los flujos heredados a navegadores modernos, sustituyendo VBScript por JavaScript compatible con varios navegadores y resolviendo comportamientos de CSS específicos de IE.",
+      "Actualicé el diseño visual y después migré flujos a React y TypeScript, conservando las reglas de negocio existentes.",
     ],
+    result:
+      "Mantuve el producto operativo más allá de IE y modernicé sus flujos con React.",
   },
   architecture: {
-    category: "Rendimiento y arquitectura",
-    title: "Menos obstáculos. Más avances.",
+    category: "Sagitta / Arquitectura",
+    title: "Cuestionar una decisión ya tomada.",
     description:
-      "Hago que el software existente sea más fácil de mantener, más rápido de compilar y más seguro de publicar.",
+      "Un producto empresarial desarrollado por siete equipos de cinco profesionales en Ucrania, India y Estados Unidos. El enfoque acordado guardaba los tokens en la capa de negocio de ASP y se estimaba que implementarlo llevaría 18 meses.",
     evidence: [
-      "Modernicé una interfaz heredada y eliminé obstáculos que frenaban la entrega de funcionalidades en varios equipos de producto.",
-      "Desarrollé una biblioteca de componentes compartida entre productos para mejorar la coherencia de las interfaces.",
-      "Migré VBScript a JavaScript compatible con varios navegadores y estabilicé el CSS en el modo de compatibilidad de IE sin alterar la experiencia existente.",
-      "Mejoré la velocidad del proceso de CI/CD en más de un 200%, con entregas más rápidas y fiables.",
+      "Detecté que cualquier navegación que no pasara por el código personalizado, incluida la recarga de la página y los botones de atrás y adelante, perdería el token.",
+      "Cuestioné la decisión cuando ya estaba acordada y propuse la gestión de tokens estándar que utiliza la mayoría de las aplicaciones web. El enfoque se modificó.",
     ],
+    result:
+      "Se completó en seis meses en lugar de los 18 estimados, lo que ahorró un año de trabajo a siete equipos. La recarga de páginas y la navegación del navegador funcionaban correctamente.",
   },
-  team: {
-    category: "Equipo y entrega",
-    title: "Equipos más sólidos. Entregas más fiables.",
+  antelu: {
+    category: "Antelu / Web pública y CMS",
+    title: "Un catálogo que el negocio puede mantener.",
     description:
-      "Entregar bien es un hábito de equipo. Contribuyo a él más allá de mis propias tareas.",
+      "Un negocio de alquiler de vehículos infantiles necesitaba un catálogo multilingüe con vías de consulta claras y una forma de gestionar vehículos y fotos sin editar archivos de código.",
     evidence: [
-      "Fui mentor de profesionales desde nivel júnior hasta sénior, mejorando la incorporación y la calidad del código.",
-      "Asesoré a otros equipos sobre prácticas de desarrollo y mejoré los procesos ágiles para estabilizar las entregas.",
-      "Creé herramientas que recuperan las horas registradas en la herramienta de gestión y envían automáticamente los partes de horas del equipo, sustituyendo la introducción manual.",
-      "Coordiné mejoras de pruebas con Playwright y revisiones de código asistidas por IA entre equipos.",
+      "Desarrollé la web con Next.js y TypeScript en español, gallego, inglés y ucraniano, con filtros de catálogo, páginas de vehículos y consultas directas por teléfono y WhatsApp.",
+      "Integré Sveltia CMS para gestionar vehículos y fotos de la galería, con optimización de imágenes al subirlas y validación del contenido antes de publicar.",
     ],
+    result:
+      "Los vehículos y las fotos se pueden gestionar desde un editor en el navegador. Los cambios se versionan en Git y se publican mediante compilaciones validadas, sin una base de datos de contenido independiente.",
+    link: { href: publicProjects.antelu.url, label: "Visitar Antelu" },
+    imageAlt: "Web de Antelu con su catálogo de vehículos de alquiler",
   },
 };
 
@@ -69,17 +71,17 @@ const metrics: Record<
   Ids<typeof en.metrics>,
   Pick<Item<Content["metrics"]>, "label" | "note">
 > = {
-  savings: {
-    label: "Ahorro en esfuerzo de ingeniería",
-    note: "Detecté y detuve una decisión arquitectónica arriesgada; la versión se publicó sin defectos.",
+  delivery: {
+    label: "Tiempo de implementación (meses)",
+    note: "Estimación inicial frente a la entrega tras cuestionar el enfoque de gestión de tokens.",
+  },
+  pipeline: {
+    label: "Proceso de CI/CD más rápido",
+    note: "Mejoré el proceso de Sagitta para lograr entregas más rápidas y fiables.",
   },
   builds: {
     label: "Tiempo de compilación de Webpack",
     note: "Reorganicé la configuración de Webpack y las herramientas de compilación de Sagitta.",
-  },
-  renders: {
-    label: "Renderizados redundantes",
-    note: "Estandaricé los flujos de estado de Redux y reorganicé el frontend de Sagitta.",
   },
 };
 
@@ -94,7 +96,7 @@ const experience: Record<
     context: "Trabajo reciente destacado",
     label: "Trabajo reciente",
     summary:
-      "Modernicé flujos administrativos de ASP heredado con React, TypeScript y C#/ASP.NET Core, utilizando agentes de GitHub Copilot para el análisis, la implementación y la revisión, con validación humana.",
+      "Desarrollo flujos administrativos con React, TypeScript y C#/ASP.NET Core, desde formularios y permisos hasta el comportamiento de las API y las pruebas de regresión.",
     highlights: [
       "Modernicé flujos administrativos de ASP heredado con React y TypeScript: formularios con validación, paneles editables y tablas con búsqueda que conservan las reglas de negocio.",
       "Desarrollé y corregí API de C#/ASP.NET Core, lógica de repositorios y mapeos de datos para resolver errores de guardado, conversiones de fechas y valores incoherentes.",
@@ -133,7 +135,7 @@ const experience: Record<
     organization: identity.employer,
     context: "Sagitta",
     summary:
-      "Reduje la compilación de unos 40 s a 15–18 s y los renderizados redundantes de nueve a uno. Implementé endpoints y correcciones para la integración con bases de datos heredadas y migré VBScript a JavaScript compatible con varios navegadores.",
+      "Reduje la compilación de unos 40 s a 15–18 s, aceleré el proceso de CI/CD en más de un 200% y reduje los renderizados redundantes de nueve a uno. Implementé endpoints y correcciones para la integración con bases de datos heredadas y migré VBScript a JavaScript compatible con varios navegadores.",
   },
   independent: {
     title: "Independent Software Engineer",
@@ -237,7 +239,7 @@ export const es: Content = {
     cv: "/andrian-kars-cv-es.pdf",
     cvFileName: "Andrian-Karsanashvili-CV-ES.pdf",
     summary:
-      "Desarrollo interfaces con React/TypeScript y servicios con C#/.NET, y configuro flujos de agentes de IA para el análisis, el desarrollo y la revisión, con las personas tomando la decisión final.",
+      "Modernizo software complejo con React, TypeScript y .NET, desde las reglas de negocio heredadas hasta flujos fiables en producción.",
     description:
       "Ingeniero full-stack sénior en Galicia, España: más de 7 años con React, TypeScript y C#/.NET y flujos de agentes de IA. Abierto a oportunidades en Europa.",
   },
@@ -245,7 +247,7 @@ export const es: Content = {
     category: "Ingeniería asistida por IA",
     title: "Agentes de IA con traspasos claros. Las personas deciden.",
     description:
-      "En la modernización de Sagitta, configuré agentes de GitHub Copilot e instrucciones reutilizables del repositorio para avanzar desde el análisis del sistema heredado hasta la revisión, con traspasos explícitos y comprobaciones de compilación y pruebas.",
+      "En Sagitta, configuré agentes de GitHub Copilot e instrucciones del repositorio para cada etapa de desarrollo, con comprobaciones de compilación y pruebas antes de la revisión humana.",
     steps: en.aiWorkflow.steps.map(({ id }) => ({ id, ...steps[id] })),
     gate: "Validación humana",
     outcome:
@@ -275,7 +277,6 @@ export const es: Content = {
     portrait: "Andrian Karsanashvili con la barbilla apoyada en la mano",
     explore: "Ver mi trabajo",
     contact: "Contactar",
-    onLinkedIn: "en LinkedIn",
     newTab: "(se abre en una pestaña nueva)",
     years: "años",
     engineering: "en ingeniería de software",
@@ -287,15 +288,28 @@ export const es: Content = {
     translationNote: "Versión en español traducida con ayuda de IA.",
     impact: {
       label: "Impacto destacado",
-      title: ["Buen software.", "Mejores formas de crearlo."],
+      title: ["Problemas reales.", "Decisiones que marcaron la diferencia."],
       summary:
-        "Productos empresariales, automatización práctica y trabajo que mejora la eficacia de todo el equipo.",
+        "Modernización para navegadores, criterio arquitectónico y una web pública cuyo contenido gestiona el negocio.",
+    },
+    caseStudy: {
+      challenge: "El reto",
+      contribution: "Mi contribución",
+      result: "El resultado",
     },
     experience: {
       label: "Experiencia",
       title: ["Experiencia acumulada.", "En todo el stack."],
       summary:
         "Desde aplicaciones para clientes hasta software empresarial de seguros. Desarrollo con React, .NET y Node.js, decisiones de arquitectura y responsabilidad compartida sobre la calidad.",
+      crossProject: {
+        label: "Contribución transversal",
+        items: [
+          "Fui mentor de profesionales desde nivel júnior hasta sénior, mejorando la incorporación y la calidad del código.",
+          "Asesoré a equipos sobre prácticas de desarrollo y procesos ágiles para estabilizar las entregas.",
+          "Creé herramientas que recuperan las horas registradas y envían automáticamente los partes de horas del equipo.",
+        ],
+      },
     },
     expertise: {
       label: "Competencias",
