@@ -38,7 +38,7 @@ function Portrait({ description }: { description: string }) {
   } = getImageProps({
     alt: description,
     src: portrait,
-    sizes: "(max-width: 1100px) 365px, 490px",
+    sizes: "(max-width: 1100px) 360px, (min-width: 1600px) 455px, 405px",
     fetchPriority: "high",
     loading: "eager",
   });

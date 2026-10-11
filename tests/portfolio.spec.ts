@@ -83,7 +83,9 @@ test("skips the portrait on phones and serves a right-sized one to desktops", as
         if (request.url().includes("/_next/image")) portraitRequests.push(request.url());
       });
       await page.goto("/", { waitUntil: "load" });
-      const image = page.getByAltText("Andrian Karsanashvili wearing red glasses");
+      const image = page.getByAltText(
+        "Andrian Karsanashvili resting his chin on his hand",
+      );
       if (width <= 760) {
         await expect(image).toBeHidden();
         expect(portraitRequests).toEqual([]);
@@ -93,17 +95,16 @@ test("skips the portrait on phones and serves a right-sized one to desktops", as
       await expect
         .poll(() => image.evaluate((element: HTMLImageElement) => element.currentSrc))
         .toContain("/_next/image");
-      const { source, rendered, loaded, density } = await image.evaluate(
+      const { served, rendered, loaded, density } = await image.evaluate(
         (element: HTMLImageElement) => ({
-          source: element.currentSrc,
+          served: element.naturalWidth,
           rendered: element.getBoundingClientRect().width,
           loaded: element.complete && element.naturalWidth > 0,
           density: window.devicePixelRatio,
         }),
       );
       expect(loaded).toBeTruthy();
-      const requestedWidth = Number(new URL(source).searchParams.get("w"));
-      expect(requestedWidth).toBeLessThanOrEqual(Math.max(640, rendered * density * 1.5));
+      expect(served).toBeLessThanOrEqual(Math.max(640, rendered * density * 1.5));
     } finally {
       await context.close();
     }

@@ -131,13 +131,13 @@
 
 .portrait {
   position: absolute;
-  width: 465px;
+  width: 405px;
   max-height: calc(100% - 42px);
   right: -22px;
   bottom: 0;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 66%, transparent 97%);
-  mask-image: linear-gradient(to bottom, #000 66%, transparent 97%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 94.5%, transparent);
+  mask-image: linear-gradient(to bottom, #000 94.5%, transparent);
 
   picture {
     display: block;
@@ -702,7 +702,7 @@
     padding-top: 95px;
   }
   .portrait {
-    width: 490px;
+    width: 455px;
   }
 }
 
@@ -717,7 +717,7 @@
     font-size: 3.25rem;
   }
   .portrait {
-    width: 365px;
+    width: 360px;
     right: -35px;
     max-height: calc(100% - 80px);
   }
@@ -777,7 +777,7 @@
     font-size: 2.875rem;
   }
   .portrait {
-    width: 330px;
+    width: 340px;
     right: -60px;
     max-height: calc(100% - 110px);
   }

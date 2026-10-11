@@ -272,7 +272,7 @@ export const es: Content = {
     backTop: "Volver arriba",
     language: "Idioma",
     eyebrow: "Ingeniería full-stack",
-    portrait: "Andrian Karsanashvili con gafas rojas",
+    portrait: "Andrian Karsanashvili con la barbilla apoyada en la mano",
     explore: "Ver mi trabajo",
     contact: "Contactar",
     onLinkedIn: "en LinkedIn",

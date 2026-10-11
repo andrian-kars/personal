@@ -297,7 +297,7 @@ export const ui = {
   backTop: "Back to top",
   language: "Language",
   eyebrow: "Full-stack engineering",
-  portrait: "Andrian Karsanashvili wearing red glasses",
+  portrait: "Andrian Karsanashvili resting his chin on his hand",
   explore: "Explore my work",
   contact: "Get in touch",
   onLinkedIn: "on LinkedIn",
