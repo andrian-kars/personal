@@ -187,8 +187,8 @@ for (const locale of locales) {
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("application/pdf");
     const hashes = {
-      en: "51803cb6c62aff20c2aa1049f5ba547767f43372e7f9637bdc2e8e5bd446d3a1",
-      es: "59fbe23516f6b186e5957f9e1e75a2af38371f9c5a4449773d036483f8f061fb",
+      en: "de1ec9a6cdd35211475d184b3f4899a707fae9301ea824c1dbed328a7309ef0a",
+      es: "8681e8d0a8191053529c0e6085a3bf8c683e4ad52662168de37cbcc367812f4a",
     };
     expect(
       createHash("sha256")

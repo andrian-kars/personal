@@ -318,7 +318,7 @@ test("serves the approved CV and downloads it", async ({ page, request }) => {
     createHash("sha256")
       .update(await response.body())
       .digest("hex"),
-  ).toBe("51803cb6c62aff20c2aa1049f5ba547767f43372e7f9637bdc2e8e5bd446d3a1");
+  ).toBe("de1ec9a6cdd35211475d184b3f4899a707fae9301ea824c1dbed328a7309ef0a");
   await page.goto("/");
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download CV (PDF)", exact: true }).click();
