@@ -319,12 +319,26 @@ test("publishes consistent metadata and generated images", async ({ page, reques
     "content",
     "630",
   );
-  const person = JSON.parse(
+  const profilePage = JSON.parse(
     await page.locator('script[type="application/ld+json"]').innerText(),
   );
+  expect(profilePage["@type"]).toBe("ProfilePage");
+  const person = profilePage.mainEntity;
   expect(person["@type"]).toBe("Person");
   expect(person.name).toBe("Andrian Karsanashvili");
+  expect(person.jobTitle).toBe("Senior Full-Stack Engineer");
+  expect(person.worksFor).toEqual({ "@type": "Organization", name: "EPAM Systems" });
+  expect(person.alumniOf).toEqual([
+    { "@type": "CollegeOrUniversity", name: "Ivan Franko National University of Lviv" },
+  ]);
+  expect(person.homeLocation.name).toBe("Europe");
+  expect(person.knowsLanguage).toEqual(["English", "German", "Japanese"]);
   expect(person.knowsAbout).toContain("React");
+  expect(person.sameAs).toEqual([
+    "https://www.linkedin.com/in/andrian-kars/",
+    "https://github.com/andrian-kars",
+  ]);
+  expect((await request.get(new URL(person.image).pathname)).ok()).toBeTruthy();
   for (const path of ["/opengraph-image", "/icon", "/favicon.ico"]) {
     const image = await request.get(path);
     expect(image.status()).toBe(200);
