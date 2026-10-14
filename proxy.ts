@@ -78,5 +78,9 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Dotted paths are skipped as files, except under /es so Spanish 404s stay Spanish.
-  matcher: ["/((?!_next|opengraph-image|icon(?:/|$)|.*\\.).*)", "/es/:path*"],
+  // /sharkies is a separate app proxied by next.config rewrites.
+  matcher: [
+    "/((?!_next|opengraph-image|icon(?:/|$)|sharkies(?:/|$)|.*\\.).*)",
+    "/es/:path*",
+  ],
 };

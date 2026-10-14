@@ -390,6 +390,39 @@ test("preserves old URLs with permanent redirects", async ({ page, request }) =>
   }
 });
 
+test("serves the Sharkies app under /sharkies without locale redirects", async ({
+  page,
+  request,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Network-backed check runs once.");
+  const slash = await request.get("/sharkies/", { maxRedirects: 0 });
+  expect(slash.status()).toBe(308);
+  expect(slash.headers().location).toBe("/sharkies");
+  for (const path of ["/sharkies", "/sharkies/creatures?kind=sharks"]) {
+    const response = await request.get(path, {
+      headers: { "accept-language": "es-ES,es;q=0.9" },
+      maxRedirects: 0,
+    });
+    expect(response.status(), path).toBe(200);
+    const html = await response.text();
+    expect(html).toContain("<title>Sharkies");
+    const script = html.match(/src="(\/sharkies\/assets\/[^"]+\.js)"/)?.[1];
+    expect(script, path).toBeTruthy();
+    const asset = await request.get(script!);
+    expect(asset.status()).toBe(200);
+    expect(asset.headers()["content-type"]).toContain("javascript");
+  }
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/sharkies/creatures?kind=titans");
+  await expect(page.getByRole("button", { name: "Giant monsters" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await expect(page).toHaveURL(/\/sharkies\/creatures\?kind=titans$/);
+  expect(errors).toEqual([]);
+});
+
 test("publishes consistent metadata and generated images", async ({ page, request }) => {
   await page.goto("/");
   await expect(page).toHaveTitle("Andrian Karsanashvili | Senior Full-Stack Engineer");

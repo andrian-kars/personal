@@ -1,5 +1,8 @@
 import type { NextConfig } from "next";
 
+// Sharkies is a Vite SPA deployed to GitHub Pages; it is built for the /sharkies/ base path.
+const sharkies = "https://andrian-kars.github.io/sharkies";
+
 const nextConfig: NextConfig = {
   agentRules: false,
   devIndicators: false,
@@ -15,6 +18,17 @@ const nextConfig: NextConfig = {
       { source: "/es/skills", destination: "/es#expertise", permanent: true },
       { source: "/es/works", destination: "/es#impact", permanent: true },
     ];
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: "/sharkies/assets/:file", destination: `${sharkies}/assets/:file` },
+        { source: "/sharkies/favicon.svg", destination: `${sharkies}/favicon.svg` },
+        // Client-side routes all load the SPA shell.
+        { source: "/sharkies", destination: `${sharkies}/` },
+        { source: "/sharkies/:path*", destination: `${sharkies}/` },
+      ],
+    };
   },
   async headers() {
     return [
