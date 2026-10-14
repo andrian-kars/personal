@@ -412,6 +412,13 @@ test("serves the Sharkies app under /sharkies without locale redirects", async (
     expect(asset.status()).toBe(200);
     expect(asset.headers()["content-type"]).toContain("javascript");
   }
+  for (const file of ["favicon.svg", "apple-touch-icon.png", "og-image.png"]) {
+    const response = await request.get(`/sharkies/${file}`, { maxRedirects: 0 });
+    expect(response.status(), file).toBe(200);
+    expect(response.headers()["content-type"], file).not.toContain("text/html");
+  }
+  const image = await request.get("/sharkies/og-image.png");
+  expect((await image.body()).subarray(1, 4).toString()).toBe("PNG");
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/sharkies/creatures?kind=titans");

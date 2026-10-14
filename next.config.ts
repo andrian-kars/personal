@@ -23,7 +23,11 @@ const nextConfig: NextConfig = {
     return {
       beforeFiles: [
         { source: "/sharkies/assets/:file", destination: `${sharkies}/assets/:file` },
-        { source: "/sharkies/favicon.svg", destination: `${sharkies}/favicon.svg` },
+        // Top-level files: favicon, touch icon and the share image.
+        {
+          source: "/sharkies/:file([\\w-]+\\.[a-z0-9]+)",
+          destination: `${sharkies}/:file`,
+        },
         // Client-side routes all load the SPA shell.
         { source: "/sharkies", destination: `${sharkies}/` },
         { source: "/sharkies/:path*", destination: `${sharkies}/` },
