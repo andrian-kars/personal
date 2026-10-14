@@ -229,6 +229,36 @@ test("puts metrics and case studies before the AI workflow", async ({ page }) =>
   await expect(page.locator("#impact dl > div")).toHaveCount(3);
 });
 
+test("full-width AI block meets the next section on phones only", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium");
+  for (const width of [390, 700, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/");
+    const layout = await page.evaluate(() => {
+      const ai = document.querySelector("#ai-heading")!.closest("article")!;
+      const box = ai.getBoundingClientRect();
+      const section = document.querySelector("#impact")!.getBoundingClientRect();
+      return {
+        fullWidth:
+          Math.abs(box.left - section.left) < 1 &&
+          Math.abs(box.right - section.right) < 1,
+        gap: Math.round(
+          document.querySelector("#experience")!.getBoundingClientRect().top - box.bottom,
+        ),
+      };
+    });
+    if (width <= 760) {
+      expect(layout.fullWidth).toBe(true);
+      expect(layout.gap).toBe(0);
+    } else {
+      expect(layout.fullWidth).toBe(false);
+      expect(layout.gap).toBeGreaterThan(0);
+    }
+  }
+});
+
 test("groups four Vertafore assignments within continuous EPAM employment", async ({
   page,
 }) => {

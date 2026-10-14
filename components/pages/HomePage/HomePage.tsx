@@ -192,7 +192,11 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
         </div>
       </section>
 
-      <section id="impact" className={styles.section} aria-labelledby="impact-heading">
+      <section
+        id="impact"
+        className={`${styles.section} ${styles.impactSection}`}
+        aria-labelledby="impact-heading"
+      >
         <div className="container">
           <div className={styles.sectionIntro}>
             <div>

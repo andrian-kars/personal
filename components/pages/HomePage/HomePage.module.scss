@@ -963,6 +963,10 @@
   .hero + .section {
     padding-top: 2rem;
   }
+  // The AI block is full-width here, so it meets the next section without a strip.
+  .section.impactSection {
+    padding-bottom: 0;
+  }
   .heroInner {
     min-height: auto;
     padding-block: 30px 30px;
