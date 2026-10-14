@@ -309,6 +309,12 @@
   font-size: 0.8125rem;
   font-variant-numeric: tabular-nums;
 }
+.aiResult {
+  border-left: 2px solid var(--accent-light);
+  padding-left: 1.25rem;
+  color: var(--dark-muted);
+  font-size: 0.9375rem;
+}
 .aiGate {
   display: flex;
   align-items: flex-start;
@@ -490,7 +496,7 @@
   padding: 1.75rem 0 0 1.75rem;
   border-top: 1px solid #bdcbc2;
 
-  h3 {
+  h4 {
     font-size: 1.125rem;
   }
   ul {
@@ -519,6 +525,26 @@
 }
 .experienceIntro .inlineLink {
   margin-top: 1.5rem;
+}
+.employmentHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #bdcbc2;
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+.assignmentLabel {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+.independentExperience {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #bdcbc2;
 }
 .timeline {
   list-style: none;
@@ -549,7 +575,8 @@
     background: var(--teal);
     border-color: var(--teal);
   }
-  h3 {
+  h3,
+  h4 {
     font-size: 1.25rem;
     line-height: 1.4;
   }
@@ -1052,7 +1079,8 @@
   .experienceLayout {
     gap: 2rem;
   }
-  .timeline h3 {
+  .timeline h3,
+  .timeline h4 {
     font-size: 1.125rem;
   }
   .timeline > li {
@@ -1125,6 +1153,7 @@
   }
   .aiHeader > p,
   .aiSteps p,
+  .aiResult,
   .aiGate {
     color: #333;
   }

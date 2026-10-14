@@ -61,9 +61,66 @@ function Portrait({ description }: { description: string }) {
   );
 }
 
+function ExperienceTimeline({
+  entries,
+  ui,
+  heading: Heading,
+}: {
+  entries: Content["experience"];
+  ui: Content["ui"];
+  heading: "h3" | "h4";
+}) {
+  return (
+    <ol className={styles.timeline}>
+      {entries.map((entry) => (
+        <li
+          key={entry.id}
+          data-experience-id={entry.id}
+          className={entry.dates.end ? undefined : styles.ongoing}
+        >
+          <p className={styles.period}>
+            <time dateTime={entry.dates.start}>
+              {formatMonth(entry.dates.start, ui.months)}
+            </time>{" "}
+            &ndash;{" "}
+            {entry.dates.end ? (
+              <time dateTime={entry.dates.end}>
+                {formatMonth(entry.dates.end, ui.months)}
+              </time>
+            ) : (
+              <span className={styles.current}>{ui.present}</span>
+            )}
+          </p>
+          <Heading>{entry.title}</Heading>
+          <p className={styles.organization}>
+            {entry.organization} <span aria-hidden="true">&middot;</span>{" "}
+            <span className={styles.context}>{entry.context}</span>
+          </p>
+          <p className={styles.summary}>{entry.summary}</p>
+          {entry.highlights && (
+            <details className={styles.highlights}>
+              <summary>
+                {ui.highlights}{" "}
+                <span className={styles.count}>({entry.highlights.length})</span>
+                <Plus size={16} aria-hidden="true" />
+              </summary>
+              <ul>
+                {entry.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export function HomePage({ content, locale }: { content: Content; locale: Locale }) {
   const {
     profile,
+    employment,
     aiWorkflow,
     education,
     experience,
@@ -253,6 +310,7 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
                 <strong>{aiWorkflow.gate}</strong>, {aiWorkflow.outcome}
               </span>
             </p>
+            <p className={styles.aiResult}>{aiWorkflow.result}</p>
           </article>
         </div>
       </section>
@@ -280,61 +338,45 @@ export function HomePage({ content, locale }: { content: Content; locale: Locale
             </a>
           </div>
           <div>
-            <ol className={styles.timeline}>
-              {experience.map((entry) => (
-                <li
-                  key={entry.id}
-                  className={entry.dates?.end ? undefined : styles.ongoing}
-                >
-                  <p className={styles.period}>
-                    {entry.dates ? (
-                      <>
-                        <time dateTime={entry.dates.start}>
-                          {formatMonth(entry.dates.start, ui.months)}
-                        </time>{" "}
-                        &ndash;{" "}
-                        {entry.dates.end ? (
-                          <time dateTime={entry.dates.end}>
-                            {formatMonth(entry.dates.end, ui.months)}
-                          </time>
-                        ) : (
-                          <span className={styles.current}>{ui.present}</span>
-                        )}
-                      </>
-                    ) : (
-                      <span className={styles.current}>{entry.label}</span>
-                    )}
-                  </p>
-                  <h3>{entry.title}</h3>
-                  <p className={styles.organization}>
-                    {entry.organization} <span aria-hidden="true">&middot;</span>{" "}
-                    <span className={styles.context}>{entry.context}</span>
-                  </p>
-                  <p className={styles.summary}>{entry.summary}</p>
-                  {entry.highlights && (
-                    <details className={styles.highlights}>
-                      <summary>
-                        {ui.highlights}{" "}
-                        <span className={styles.count}>({entry.highlights.length})</span>
-                        <Plus size={16} aria-hidden="true" />
-                      </summary>
-                      <ul>
-                        {entry.highlights.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </details>
-                  )}
-                </li>
-              ))}
-            </ol>
-            <div className={styles.crossProject}>
-              <h3>{ui.experience.crossProject.label}</h3>
-              <ul>
-                {ui.experience.crossProject.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+            <section id="epam-experience" aria-labelledby="epam-heading">
+              <div className={styles.employmentHeader}>
+                <p className={styles.period}>
+                  <time dateTime={employment.start}>
+                    {formatMonth(employment.start, ui.months)}
+                  </time>{" "}
+                  &ndash; <span className={styles.current}>{ui.present}</span>
+                </p>
+                <h3 id="epam-heading">{employment.organization}</h3>
+                <p className={styles.organization}>
+                  {ui.experience.client}: <strong>{employment.client}</strong> &middot;{" "}
+                  {ui.experience.domain}
+                </p>
+                <p className={styles.assignmentLabel}>{ui.experience.assignments}</p>
+              </div>
+              <ExperienceTimeline
+                entries={experience.filter(
+                  (entry) => entry.organization === employment.organization,
+                )}
+                ui={ui}
+                heading="h4"
+              />
+              <div className={styles.crossProject}>
+                <h4>{ui.experience.crossProject.label}</h4>
+                <ul>
+                  {ui.experience.crossProject.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+            <div className={styles.independentExperience}>
+              <ExperienceTimeline
+                entries={experience.filter(
+                  (entry) => entry.organization !== employment.organization,
+                )}
+                ui={ui}
+                heading="h3"
+              />
             </div>
           </div>
         </div>

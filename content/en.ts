@@ -1,4 +1,10 @@
-import { engagements, identity, measurements, publicProjects } from "@/data/portfolio";
+import {
+  employment,
+  engagements,
+  identity,
+  measurements,
+  publicProjects,
+} from "@/data/portfolio";
 
 export const profile = {
   ...identity,
@@ -17,7 +23,9 @@ export const aiWorkflow = {
   category: "AI-assisted engineering",
   title: "AI agents with clear handoffs. People make the calls.",
   description:
-    "On Sagitta, I configured GitHub Copilot agents and repository instructions for each delivery stage, with build and test checks before human review.",
+    "I returned to Sagitta in July 2026: migrating a product with more than 1,000 pages to React one page at a time would have taken years. We generalized the Agency One components and shared application logic, then I configured GitHub Copilot agents for analysis, implementation and review.",
+  result:
+    "Combining the stronger shared foundation with AI-assisted development cut typical page delivery time, including testing and review, from about a month to between a few days and three weeks, depending on complexity.",
   steps: [
     {
       id: "analysis",
@@ -62,12 +70,13 @@ export const impact: readonly Impact[] = [
     category: "Sagitta / Browser modernization",
     title: "A future beyond Internet Explorer.",
     description:
-      "A 30-year-old enterprise product with more than 1,000 pages only worked in Internet Explorer. Its retirement put continued access to the product at risk.",
+      "Sagitta, a 30-year-old Vertafore insurance product with more than 1,000 pages, only worked in Internet Explorer. Its retirement put continued access to the product at risk.",
     evidence: [
-      "Made legacy workflows work in modern browsers, replacing VBScript with cross-browser JavaScript and resolving IE-specific CSS behavior.",
-      "Updated the visual design, then migrated workflows to React and TypeScript while preserving existing business rules.",
+      "Defined the VBScript-to-JavaScript conversion approach, implemented the first pages and resolved IE-specific CSS behavior so other teams could continue the migration.",
+      "Reorganized the architecture, updated the visual design and initiated the React migration, building the first pages and setting the approach up so other teams could pick it up and continue.",
     ],
-    result: "Kept the product usable beyond IE and modernized its workflows in React.",
+    result:
+      "Kept the product usable beyond IE and established a repeatable React migration approach that other delivery teams could adopt.",
   },
   {
     id: "architecture",
@@ -76,7 +85,7 @@ export const impact: readonly Impact[] = [
     description:
       "An enterprise product built by seven teams of five engineers across Ukraine, India and the US. The agreed approach kept tokens in the ASP business layer and was estimated at 18 months to implement.",
     evidence: [
-      "Identified that any navigation bypassing the custom code, including page refresh and browser back/forward, would lose the token.",
+      "Identified that navigation bypassing the custom code, including page refresh and the browser's Back and Forward buttons, would cause token loss.",
       "Challenged the decision after it had been agreed and proposed the standard token management most web applications use. The approach was changed.",
     ],
     result:
@@ -133,8 +142,7 @@ type Experience = {
   title: string;
   organization: string;
   context: string;
-  dates?: { start: string; end?: string };
-  label?: string;
+  dates: { start: string; end?: string };
   summary: string;
   highlights?: readonly string[];
 };
@@ -143,38 +151,26 @@ export const experience: readonly Experience[] = [
   {
     id: "recent",
     ...engagements.recent,
-    title: "Sagitta modernization & AI-assisted delivery",
-    context: "Selected recent work",
-    label: "Recent work",
+    title: "Senior Full-Stack Developer",
+    context: "Sagitta / AI-assisted modernization",
     summary:
-      "Delivering administration workflows across React, TypeScript and C#/ASP.NET Core, from forms and permissions to API behavior and regression coverage.",
+      "Returned to Sagitta to explore AI-assisted delivery: migrating a product with more than 1,000 pages to React one page at a time would have taken years. Strengthened the shared foundation and existing React pages before introducing agents to accelerate implementation and review.",
     highlights: [
-      "Modernized legacy ASP administration workflows with React and TypeScript: validated forms, editable drawers and searchable grids that preserve business rules.",
-      "Developed and corrected C#/ASP.NET Core API behavior, repository logic and data mappings, fixing save failures, date conversion and inconsistent field values.",
-      "Built schema-driven forms and paginated grids; extracted shared bulk-delete hooks and API helpers reused across settings pages.",
-      "Implemented masked credential reveal and replacement with re-locking after save, and fixed the API to preserve stored values when unchanged.",
-      "Integrated claims-based UI permissions and multi-factor authentication configuration with existing access-control patterns.",
-      "Improved React Query caching and server-persisted table preferences, fixing stale values, selection state and grid settings.",
-      "Configured GitHub Copilot agents and reusable instructions for analysis, design, implementation and review, with explicit handoffs and build/test checks.",
-      "Set up AI-assisted requirements comparison with human review gates and separate product-owner and developer reports.",
-      "Added Jest and React Testing Library regression tests for validation, secure fields, grid behavior and bulk actions.",
+      "With the team, generalized the Agency One components already adapted for Sagitta, encapsulating common behavior so teams could reuse application logic as well as UI instead of rebuilding page-specific solutions.",
+      "Improved schema-driven forms, editable drawers and paginated grids; extracted shared bulk-action hooks and API helpers while preserving business rules.",
+      "Corrected C# and ASP.NET Core API behavior, repository logic and data mappings behind save failures, date conversions and inconsistent values.",
+      "Implemented masked credential reveal and replacement, claims-based permissions and multi-factor authentication configuration; corrected React Query caching and persisted table preferences.",
+      "Configured GitHub Copilot agents and repository instructions for analysis, design, implementation and review, with explicit handoffs, build/test checks and human review gates.",
+      "Compared legacy and React behavior with AI assistance and produced separate product-owner and developer reports; added Jest and React Testing Library regression coverage.",
     ],
   },
   {
     id: "certificates",
     ...engagements.certificates,
     title: "Senior Full-Stack Developer",
-    context: "Certificates Platform",
+    context: "Import Tool & Certificates Platform",
     summary:
-      "Owned certificate delivery end to end: blob-based document generation, download and import handling, and in-app PDF previews. Coordinated AI-assisted Playwright test improvements and code reviews across teams.",
-  },
-  {
-    id: "import",
-    ...engagements.import,
-    title: "Front-End Architecture Consultant",
-    context: "Import Tool",
-    summary:
-      "Assessed the frontend architecture, delivered targeted improvements and provided a prioritized roadmap for a more resilient release.",
+      "Started with front-end architecture consulting on Import Tool: assessed the design, delivered improvements and a prioritized roadmap, then worked with other engineers to integrate it with Certificates Platform. Owned document generation, download/import handling and in-app PDF previews, stabilizing failures across the flow. Coordinated AI-assisted Playwright test improvements and code reviews across teams, and handed ongoing delivery to the team before returning to Sagitta.",
   },
   {
     id: "agency",
@@ -182,7 +178,7 @@ export const experience: readonly Experience[] = [
     title: "Senior Front-End Developer",
     context: "Agency One",
     summary:
-      "Built a reusable component library shared across products, improving UI consistency and reducing duplicated work. Evaluated and integrated third-party libraries against product, maintainability and team needs.",
+      "Built a reusable component library and shared top navigation that participating products integrated with their authentication token. Enabled users to move between products without another login while carrying customer and policy context. Moved to the next assignment after the product stabilized.",
   },
   {
     id: "sagitta",
@@ -190,7 +186,7 @@ export const experience: readonly Experience[] = [
     title: "Full-Stack Engineer",
     context: "Sagitta",
     summary:
-      "Cut build times from ~40s to 15–18s, sped up the CI/CD pipeline by over 200% and reduced redundant renders from nine to one. Shipped API endpoints and hotfixes for legacy database integration, and migrated VBScript to cross-browser JavaScript.",
+      "Reorganized the architecture and initiated the React migration. Defined the VBScript conversion and React approaches and built the first pages so other teams could pick them up and continue. Improved CI/CD speed by over 200%, reduced builds from ~40s to 15–18s and redundant renders from nine to one. Shipped API endpoints and hotfixes for legacy database integration, and challenged the token-management decision that threatened browser navigation.",
   },
   {
     id: "independent",
@@ -328,7 +324,10 @@ export const ui = {
     label: "Experience",
     title: ["Built over time.", "Across the stack."],
     summary:
-      "From client applications to enterprise insurance software. Hands-on delivery across React, .NET and Node.js, architecture decisions and shared responsibility for quality.",
+      "With EPAM since February 2021, working on Vertafore insurance products throughout. I moved to each new assignment once the product was stable and the team could carry it forward.",
+    client: "Client",
+    assignments: "Assignments within the same client engagement",
+    domain: "Insurance software",
     crossProject: {
       label: "Across projects",
       items: [
@@ -378,6 +377,7 @@ export const ui = {
 
 export const en = {
   profile,
+  employment,
   aiWorkflow,
   impact,
   metrics,

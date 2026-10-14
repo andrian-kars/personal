@@ -229,14 +229,34 @@ test("puts metrics and case studies before the AI workflow", async ({ page }) =>
   await expect(page.locator("#impact dl > div")).toHaveCount(3);
 });
 
-test("lists every role in one consistent timeline", async ({ page }) => {
+test("groups four Vertafore assignments within continuous EPAM employment", async ({
+  page,
+}) => {
   await page.goto("/");
   const entries = page.locator("#experience ol > li");
-  await expect(entries).toHaveCount(6);
+  await expect(entries).toHaveCount(5);
+  const epam = page.getByRole("region", { name: "EPAM Systems", exact: true });
+  await expect(epam.locator("ol > li")).toHaveCount(4);
+  await expect(epam).toContainText("Vertafore");
+  await expect(epam.locator("time").first()).toHaveAttribute("datetime", "2021-02");
+  expect(
+    await epam.locator("li[data-experience-id]").evaluateAll((items) =>
+      items.map((item) => ({
+        id: item.getAttribute("data-experience-id"),
+        dates: [...item.querySelectorAll("time")].map((time) => time.dateTime),
+      })),
+    ),
+  ).toEqual([
+    { id: "recent", dates: ["2026-07"] },
+    { id: "certificates", dates: ["2025-05", "2026-07"] },
+    { id: "agency", dates: ["2024-01", "2025-05"] },
+    { id: "sagitta", dates: ["2021-02", "2024-01"] },
+  ]);
   await expect(entries.last()).toContainText("Independent Software Engineer");
+  await expect(epam).not.toContainText("Independent Software Engineer");
   for (const entry of await entries.all()) {
     await expect(entry.locator("> p").first()).not.toBeEmpty();
-    await expect(entry.locator("> h3")).toHaveCount(1);
+    await expect(entry.locator("> h3, > h4")).toHaveCount(1);
     await expect(entry.locator("> p").nth(1)).toContainText("·");
   }
   await expect(page.locator("#experience details")).toHaveCount(1);
@@ -318,7 +338,7 @@ test("serves the approved CV and downloads it", async ({ page, request }) => {
     createHash("sha256")
       .update(await response.body())
       .digest("hex"),
-  ).toBe("de1ec9a6cdd35211475d184b3f4899a707fae9301ea824c1dbed328a7309ef0a");
+  ).toBe("a135a2b2433a2a2ebfe21d80593da96d5d44eec0db72e7a57bd74026b764c2c9");
   await page.goto("/");
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download CV (PDF)", exact: true }).click();

@@ -3,7 +3,13 @@ import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { en } from "../content/en";
 import { es } from "../content/es";
-import { engagements, identity, measurements, publicProjects } from "../data/portfolio";
+import {
+  employment,
+  engagements,
+  identity,
+  measurements,
+  publicProjects,
+} from "../data/portfolio";
 import { localeCookie, localePath, locales } from "../i18n/config";
 
 const sharedValues = new Set<string>();
@@ -11,7 +17,7 @@ const collect = (value: unknown) => {
   if (typeof value === "string") sharedValues.add(value);
   else if (value && typeof value === "object") Object.values(value).forEach(collect);
 };
-[identity, engagements, measurements, publicProjects].forEach(collect);
+[identity, employment, engagements, measurements, publicProjects].forEach(collect);
 const sharedKeys = new Set(["id", "code", "year", "start", "end"]);
 // Proper names that deliberately stay in English on the Spanish page and CV.
 const intentionalEnglish = new Set([
@@ -135,6 +141,34 @@ test("negotiates only the root without caching preferences or looping", async ({
 for (const locale of locales) {
   const content = locale === "en" ? en : es;
   const path = localePath(locale);
+  test(`${locale}: employer, client and approximate delivery context are visible`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const epam = page.getByRole("region", {
+      name: content.employment.organization,
+      exact: true,
+    });
+    await expect(epam).toContainText(content.employment.client);
+    await expect(epam).toContainText(content.ui.experience.assignments);
+    await expect(epam.locator("ol > li")).toHaveCount(4);
+    for (const entry of content.experience.filter(
+      (item) => item.organization === content.employment.organization,
+    )) {
+      const role = epam.locator(`[data-experience-id="${entry.id}"]`);
+      await expect(role).toContainText(entry.context);
+      await expect(role.locator("time").first()).toHaveAttribute(
+        "datetime",
+        entry.dates.start,
+      );
+    }
+    const workflow = page.getByRole("article", {
+      name: content.aiWorkflow.title,
+      exact: true,
+    });
+    await expect(workflow).toContainText(content.aiWorkflow.result);
+  });
+
   test(`${locale}: case studies expose contributions, outcomes and the public project`, async ({
     page,
   }) => {
@@ -187,8 +221,8 @@ for (const locale of locales) {
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("application/pdf");
     const hashes = {
-      en: "de1ec9a6cdd35211475d184b3f4899a707fae9301ea824c1dbed328a7309ef0a",
-      es: "8681e8d0a8191053529c0e6085a3bf8c683e4ad52662168de37cbcc367812f4a",
+      en: "a135a2b2433a2a2ebfe21d80593da96d5d44eec0db72e7a57bd74026b764c2c9",
+      es: "ba2ea20f0d0185d9b04766f524529ce2a39ea0d10a1d224b256d9942c712fe99",
     };
     expect(
       createHash("sha256")
@@ -247,8 +281,8 @@ for (const locale of locales) {
     const image = await request.get(new URL(imageUrl!).pathname);
     expect(image.status()).toBe(200);
     expect(image.headers()["content-type"]).toContain("image/png");
-    await expect(page.locator("#experience time").first()).toHaveText(
-      locale === "en" ? "Sep 2025" : "sept 2025",
+    await expect(page.locator('[data-experience-id="recent"] time').first()).toHaveText(
+      locale === "en" ? "Jul 2026" : "jul 2026",
     );
     await expect(page.locator("#contact h2 > span")).toHaveText(".");
     await expect(page.locator("#contact li")).toHaveText([

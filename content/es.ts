@@ -1,4 +1,10 @@
-import { engagements, identity, measurements, publicProjects } from "@/data/portfolio";
+import {
+  employment,
+  engagements,
+  identity,
+  measurements,
+  publicProjects,
+} from "@/data/portfolio";
 import { en } from "./en";
 import type { Content, Ids } from "./types";
 
@@ -10,7 +16,7 @@ const steps: Record<
 > = {
   analysis: {
     title: "Análisis del sistema heredado",
-    description: "Análisis en paralelo del comportamiento heredado y de React.",
+    description: "Análisis en paralelo del sistema heredado y su versión en React.",
   },
   design: {
     title: "Diseño full-stack",
@@ -31,13 +37,13 @@ const impact: Record<Ids<typeof en.impact>, Omit<Item<Content["impact"]>, "id">>
     category: "Sagitta / Modernización para navegadores",
     title: "Un futuro más allá de Internet Explorer.",
     description:
-      "Un producto empresarial de 30 años con más de 1000 páginas solo funcionaba en Internet Explorer. La retirada del navegador ponía en riesgo el acceso al producto.",
+      "Sagitta, un producto de Vertafore para el sector asegurador con 30 años de antigüedad y más de 1000 páginas, solo funcionaba en Internet Explorer. La retirada del navegador ponía en riesgo el acceso al producto.",
     evidence: [
-      "Adapté los flujos heredados a navegadores modernos, sustituyendo VBScript por JavaScript compatible con varios navegadores y resolviendo comportamientos de CSS específicos de IE.",
-      "Actualicé el diseño visual y después migré flujos a React y TypeScript, conservando las reglas de negocio existentes.",
+      "Definí el enfoque de conversión de VBScript a JavaScript, implementé las primeras páginas y resolví incompatibilidades de CSS de IE para que otros equipos pudieran continuar la migración.",
+      "Reorganicé la arquitectura, actualicé el diseño visual e inicié la migración a React: creé las primeras páginas y establecí las pautas para que otros equipos continuaran el trabajo.",
     ],
     result:
-      "Mantuve el producto operativo más allá de IE y modernicé sus flujos con React.",
+      "Mantuve el producto operativo más allá de IE y establecí un enfoque de migración a React que otros equipos podían aplicar de forma consistente.",
   },
   architecture: {
     category: "Sagitta / Arquitectura",
@@ -45,11 +51,11 @@ const impact: Record<Ids<typeof en.impact>, Omit<Item<Content["impact"]>, "id">>
     description:
       "Un producto empresarial desarrollado por siete equipos de cinco profesionales en Ucrania, India y Estados Unidos. El enfoque acordado guardaba los tokens en la capa de negocio de ASP y se estimaba que implementarlo llevaría 18 meses.",
     evidence: [
-      "Detecté que cualquier navegación que no pasara por el código personalizado, incluida la recarga de la página y los botones de atrás y adelante, perdería el token.",
+      "Detecté que navegar sin pasar por el código personalizado provocaría la pérdida del token, incluso al recargar la página o usar los botones Atrás y Adelante.",
       "Cuestioné la decisión cuando ya estaba acordada y propuse la gestión de tokens estándar que utiliza la mayoría de las aplicaciones web. El enfoque se modificó.",
     ],
     result:
-      "Se completó en seis meses en lugar de los 18 estimados, lo que ahorró un año de trabajo a siete equipos. La recarga de páginas y la navegación del navegador funcionaban correctamente.",
+      "La implementación se completó en seis meses frente a los 18 estimados, lo que ahorró un año de trabajo a siete equipos. La recarga de páginas y los botones Atrás y Adelante funcionaban correctamente.",
   },
   antelu: {
     category: "Antelu / Web pública y CMS",
@@ -91,51 +97,40 @@ const experience: Record<
   Omit<Item<Content["experience"]>, "id" | "dates">
 > = {
   recent: {
-    title: "Modernización de Sagitta y desarrollo asistido por IA",
+    title: "Senior Full-Stack Developer",
     organization: identity.employer,
-    context: "Trabajo reciente destacado",
-    label: "Trabajo reciente",
+    context: "Sagitta / Modernización asistida por IA",
     summary:
-      "Desarrollo flujos administrativos con React, TypeScript y C#/ASP.NET Core, desde formularios y permisos hasta el comportamiento de las API y las pruebas de regresión.",
+      "Volví a Sagitta para explorar el desarrollo asistido por IA: completar la migración a React de un producto con más de 1000 páginas habría llevado años con el enfoque existente. Mejoré la base compartida y las páginas existentes antes de introducir agentes para acelerar el desarrollo y la revisión.",
     highlights: [
-      "Modernicé flujos administrativos de ASP heredado con React y TypeScript: formularios con validación, paneles editables y tablas con búsqueda que conservan las reglas de negocio.",
-      "Desarrollé y corregí API de C#/ASP.NET Core, lógica de repositorios y mapeos de datos para resolver errores de guardado, conversiones de fechas y valores incoherentes.",
-      "Implementé formularios basados en esquemas y tablas paginadas; extraje hooks de eliminación masiva y utilidades de API compartidos entre páginas de configuración.",
-      "Implementé la visualización y sustitución de credenciales enmascaradas, con bloqueo tras el guardado, y corregí la API para conservar los valores almacenados cuando no cambian.",
-      "Integré permisos de interfaz basados en claims y la configuración de autenticación multifactor con los patrones de control de acceso existentes.",
-      "Mejoré la caché de React Query y las preferencias de tablas persistidas en el servidor, corrigiendo valores obsoletos, estados de selección y configuraciones incoherentes.",
-      "Configuré agentes de GitHub Copilot e instrucciones reutilizables para el análisis, el diseño, la implementación y la revisión, con traspasos explícitos entre etapas y comprobaciones de compilación y pruebas.",
-      "Configuré la comparación de requisitos asistida por IA, con validación humana e informes separados para responsables de producto y desarrolladores.",
-      "Añadí pruebas de regresión con Jest y React Testing Library para validación, campos sensibles, comportamiento de tablas y acciones masivas.",
+      "Generalicé con el equipo los componentes de Agency One ya adaptados a Sagitta, encapsulando comportamientos comunes para reutilizar tanto la lógica de aplicación como la interfaz y evitar soluciones específicas para cada página.",
+      "Mejoré formularios basados en esquemas, paneles editables y tablas paginadas; extraje hooks y utilidades de API reutilizables para operaciones masivas, conservando las reglas de negocio.",
+      "Corregí API en C# y ASP.NET Core, lógica de repositorios y mapeos de datos que provocaban errores de guardado, conversión de fechas y valores incoherentes.",
+      "Implementé la visualización y sustitución de credenciales ocultas, permisos basados en claims y configuración de autenticación multifactor; corregí la caché de React Query y las preferencias de tablas guardadas en el servidor.",
+      "Configuré agentes de GitHub Copilot e instrucciones de repositorio para análisis, diseño, desarrollo y revisión, con responsabilidades explícitas, comprobaciones de compilación y pruebas, y validación humana.",
+      "Comparé el comportamiento del sistema heredado y su versión en React con ayuda de IA y generé informes separados para los equipos de producto y desarrollo; añadí pruebas de regresión con Jest y React Testing Library.",
     ],
   },
   certificates: {
     title: "Senior Full-Stack Developer",
     organization: identity.employer,
-    context: "Certificates Platform",
+    context: "Import Tool y Certificates Platform",
     summary:
-      "Fui responsable del flujo completo de certificados: generación de documentos mediante blobs, descarga, importación y previsualización de PDF en la aplicación. Coordiné mejoras de pruebas con Playwright y revisiones de código asistidas por IA entre equipos.",
-  },
-  import: {
-    title: "Front-End Architecture Consultant",
-    organization: identity.employer,
-    context: "Import Tool",
-    summary:
-      "Evalué la arquitectura del frontend, implementé mejoras concretas y entregué una hoja de ruta priorizada para lograr versiones más robustas.",
+      "Comencé como consultor de arquitectura frontend en Import Tool: evalué el diseño, implementé mejoras, elaboré una hoja de ruta priorizada y colaboré con otros ingenieros para integrarlo con Certificates Platform. Desarrollé las funciones de generación, descarga e importación de documentos y visualización de PDF, corrigiendo fallos en todo el proceso. Coordiné mejoras de pruebas con Playwright y revisiones de código asistidas por IA entre equipos, y delegué en el equipo la continuidad del desarrollo antes de volver a Sagitta.",
   },
   agency: {
     title: "Senior Front-End Developer",
     organization: identity.employer,
     context: "Agency One",
     summary:
-      "Desarrollé una biblioteca de componentes compartida entre productos para mejorar la coherencia visual y reducir trabajo duplicado. Evalué e integré bibliotecas de terceros según los requisitos del producto, la mantenibilidad y las necesidades del equipo.",
+      "Creé una biblioteca reutilizable y una barra de navegación compartida que cada producto integraba con su token de autenticación. Permitía cambiar de producto sin iniciar sesión de nuevo y conservar el contexto del cliente y sus pólizas. Pasé a otro proyecto cuando el producto se estabilizó.",
   },
   sagitta: {
     title: "Full-Stack Engineer",
     organization: identity.employer,
     context: "Sagitta",
     summary:
-      "Reduje la compilación de unos 40 s a 15–18 s, aceleré el proceso de CI/CD en más de un 200% y reduje los renderizados redundantes de nueve a uno. Implementé endpoints y correcciones para la integración con bases de datos heredadas y migré VBScript a JavaScript compatible con varios navegadores.",
+      "Reorganicé la arquitectura e inicié la migración a React. Definí los enfoques de conversión de VBScript y migración a React y creé las primeras páginas para que otros equipos continuaran el trabajo. Aumenté la velocidad de CI/CD en más del 200 %, reduje el tiempo de compilación de unos 40 s a 15–18 s y los renderizados redundantes de nueve a uno. Implementé endpoints y correcciones para la integración con bases de datos heredadas y cuestioné la gestión de tokens que ponía en riesgo la navegación.",
   },
   independent: {
     title: "Independent Software Engineer",
@@ -231,6 +226,7 @@ const links: Record<Ids<typeof en.navigation.links>, string> = {
 };
 
 export const es: Content = {
+  employment,
   profile: {
     ...identity,
     role: "Ingeniero full-stack sénior",
@@ -247,11 +243,13 @@ export const es: Content = {
     category: "Ingeniería asistida por IA",
     title: "Agentes de IA con traspasos claros. Las personas deciden.",
     description:
-      "En Sagitta, configuré agentes de GitHub Copilot e instrucciones del repositorio para cada etapa de desarrollo, con comprobaciones de compilación y pruebas antes de la revisión humana.",
+      "Volví a Sagitta en julio de 2026: completar la migración a React de un producto con más de 1000 páginas habría llevado años con el enfoque existente. Generalizamos los componentes de Agency One y la lógica de aplicación compartida; después configuré agentes de GitHub Copilot para análisis, desarrollo y revisión.",
+    result:
+      "Al combinar una base compartida más sólida con el desarrollo asistido por IA, la entrega de una página, incluidas las pruebas y la revisión, pasó a requerir entre unos días y tres semanas, según su complejidad, frente a alrededor de un mes antes.",
     steps: en.aiWorkflow.steps.map(({ id }) => ({ id, ...steps[id] })),
     gate: "Validación humana",
     outcome:
-      "con informes separados para responsables de producto y desarrolladores sobre carencias de requisitos y cambios de experiencia de usuario.",
+      "con informes separados para responsables de producto y desarrolladores sobre requisitos sin cubrir y cambios en la experiencia de usuario.",
   },
   impact: en.impact.map(({ id }) => ({ id, ...impact[id] })),
   metrics: en.metrics.map(({ id }) => ({ id, ...measurements[id], ...metrics[id] })),
@@ -301,11 +299,14 @@ export const es: Content = {
       label: "Experiencia",
       title: ["Experiencia acumulada.", "En todo el stack."],
       summary:
-        "Desde aplicaciones para clientes hasta software empresarial de seguros. Desarrollo con React, .NET y Node.js, decisiones de arquitectura y responsabilidad compartida sobre la calidad.",
+        "En EPAM desde febrero de 2021, siempre en productos de seguros de Vertafore. Pasé a cada nueva asignación cuando el producto era estable y el equipo podía continuar el trabajo.",
+      client: "Cliente",
+      assignments: "Asignaciones para el mismo cliente",
+      domain: "Software para el sector asegurador",
       crossProject: {
         label: "Contribución transversal",
         items: [
-          "Fui mentor de profesionales desde nivel júnior hasta sénior, mejorando la incorporación y la calidad del código.",
+          "Fui mentor de profesionales de nivel júnior a sénior, facilitando su incorporación y mejorando la calidad del código.",
           "Asesoré a equipos sobre prácticas de desarrollo y procesos ágiles para estabilizar las entregas.",
           "Creé herramientas que recuperan las horas registradas y envían automáticamente los partes de horas del equipo.",
         ],

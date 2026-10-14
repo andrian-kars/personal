@@ -14,20 +14,25 @@ export const identity = {
   languageCodes: ["en", "de", "ja"],
 } as const;
 
+export const employment = {
+  organization: identity.employer,
+  client: "Vertafore",
+  start: "2021-02",
+} as const;
+
 export const engagements = {
-  recent: { organization: identity.employer },
-  certificates: { organization: identity.employer, dates: { start: "2025-09" } },
-  import: {
+  recent: { organization: identity.employer, dates: { start: "2026-07" } },
+  certificates: {
     organization: identity.employer,
-    dates: { start: "2025-08", end: "2025-09" },
+    dates: { start: "2025-05", end: "2026-07" },
   },
   agency: {
     organization: identity.employer,
-    dates: { start: "2024-06", end: "2025-08" },
+    dates: { start: "2024-01", end: "2025-05" },
   },
   sagitta: {
     organization: identity.employer,
-    dates: { start: "2021-02", end: "2024-06" },
+    dates: { start: "2021-02", end: "2024-01" },
   },
   independent: { dates: { start: "2019-03", end: "2021-02" } },
 } as const;
