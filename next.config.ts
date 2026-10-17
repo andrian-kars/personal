@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 // Sharkies is a Vite SPA deployed to GitHub Pages; it is built for the /sharkies/ base path.
 const sharkies = "https://andrian-kars.github.io/sharkies";
+// Solidaro is a static Next.js export deployed to GitHub Pages, built for the /solidaro base path.
+const solidaro = "https://andrian-kars.github.io/solidaro";
 
 const nextConfig: NextConfig = {
   agentRules: false,
@@ -31,6 +33,15 @@ const nextConfig: NextConfig = {
         // Client-side routes all load the SPA shell.
         { source: "/sharkies", destination: `${sharkies}/` },
         { source: "/sharkies/:path*", destination: `${sharkies}/` },
+        { source: "/solidaro/_next/:path*", destination: `${solidaro}/_next/:path*` },
+        { source: "/solidaro/images/:path*", destination: `${solidaro}/images/:path*` },
+        {
+          source: "/solidaro/:file([\\w-]+\\.[a-z0-9]+)",
+          destination: `${solidaro}/:file`,
+        },
+        { source: "/solidaro", destination: `${solidaro}/` },
+        // Every page is an exported .html file; Pages answers anything else with its 404.html.
+        { source: "/solidaro/:path*", destination: `${solidaro}/:path*.html` },
       ],
     };
   },

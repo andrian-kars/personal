@@ -430,6 +430,60 @@ test("serves the Sharkies app under /sharkies without locale redirects", async (
   expect(errors).toEqual([]);
 });
 
+test("serves the Solidaro site under /solidaro without locale redirects", async ({
+  page,
+  request,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Network-backed check runs once.");
+  const slash = await request.get("/solidaro/", { maxRedirects: 0 });
+  expect(slash.status()).toBe(308);
+  expect(slash.headers().location).toBe("/solidaro");
+  for (const [path, lang] of [
+    ["/solidaro", "en"],
+    ["/solidaro/uk", "uk"],
+    ["/solidaro/de/schedule", "de"],
+  ]) {
+    const response = await request.get(path, {
+      headers: { "accept-language": "es-ES,es;q=0.9" },
+      maxRedirects: 0,
+    });
+    expect(response.status(), path).toBe(200);
+    const html = await response.text();
+    expect(html).toContain(`<html lang="${lang}"`);
+    expect(html).toContain("Solidaro");
+    const script = html.match(/src="(\/solidaro\/_next\/[^"]+\.js)"/)?.[1];
+    expect(script, path).toBeTruthy();
+    const asset = await request.get(script!);
+    expect(asset.status()).toBe(200);
+    expect(asset.headers()["content-type"]).toContain("javascript");
+  }
+  for (const file of [
+    "favicon.svg",
+    "apple-touch-icon.png",
+    "social.png",
+    "sitemap.xml",
+    "images/work/personal.webp",
+  ]) {
+    const response = await request.get(`/solidaro/${file}`, { maxRedirects: 0 });
+    expect(response.status(), file).toBe(200);
+    expect(response.headers()["content-type"], file).not.toContain("text/html");
+  }
+  const missing = await request.get("/solidaro/uk/no-such-page", { maxRedirects: 0 });
+  expect(missing.status()).toBe(404);
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/solidaro/ja");
+  await expect(page.locator("h1")).toHaveText("Solidaro*");
+  await page
+    .locator(".projects")
+    .getByRole("link", { name: "andrian-kars.com", exact: true })
+    .waitFor();
+  await page.locator(".hero-actions .button").click();
+  await expect(page).toHaveURL(/\/solidaro\/ja\/schedule$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "ja");
+  expect(errors).toEqual([]);
+});
+
 test("publishes consistent metadata and generated images", async ({ page, request }) => {
   await page.goto("/");
   await expect(page).toHaveTitle("Andrian Karsanashvili | Senior Full-Stack Engineer");
