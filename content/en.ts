@@ -9,14 +9,14 @@ import {
 export const profile = {
   ...identity,
   role: "Senior Full-Stack Engineer",
-  specialties: ["AI-assisted engineering", "React & TypeScript", "C# & .NET"],
+  specialties: ["AI-assisted engineering", "React & TypeScript", "Node.js, C# & .NET"],
   location: "Galicia, Spain",
   cv: "/andrian-kars-cv.pdf",
   cvFileName: "Andrian-Karsanashvili-CV.pdf",
   summary:
-    "I modernize complex software across React, TypeScript and .NET, from legacy business rules to reliable production workflows.",
+    "I modernize complex software across React, TypeScript, Node.js and .NET, from legacy business rules to reliable production workflows.",
   description:
-    "Senior full-stack engineer in Galicia, Spain, with 7+ years of React, TypeScript and C#/.NET and hands-on AI-agent workflows. Open to roles across Europe.",
+    "Senior full-stack engineer in Galicia, Spain, with 7+ years of React, TypeScript, Node.js and C#/.NET and hands-on AI-agent workflows. Open to roles across Europe.",
 } as const;
 
 export const aiWorkflow = {
@@ -126,8 +126,8 @@ export const metrics: readonly Metric[] = [
   {
     id: "pipeline",
     ...measurements.pipeline,
-    label: "Faster CI/CD pipeline",
-    note: "Improved the Sagitta pipeline for faster, more reliable releases.",
+    label: "GitLab CI/CD pipeline",
+    note: "Reworked the Sagitta pipeline for faster, more reliable releases.",
   },
   {
     id: "builds",
@@ -170,7 +170,7 @@ export const experience: readonly Experience[] = [
     title: "Senior Full-Stack Developer",
     context: "Import Tool & Certificates Platform",
     summary:
-      "Started with front-end architecture consulting on Import Tool: assessed the design, delivered improvements and a prioritized roadmap, then worked with other engineers to integrate it with Certificates Platform. Owned document generation, download/import handling and in-app PDF previews, stabilizing failures across the flow. Coordinated AI-assisted Playwright test improvements and code reviews across teams, and handed ongoing delivery to the team before returning to Sagitta.",
+      "Started with front-end architecture consulting on Import Tool: assessed the design, delivered improvements and a prioritized roadmap, then worked with other engineers to integrate it with Certificates Platform. Owned document generation, download/import handling and in-app PDF previews, stabilizing failures across the flow. Built Node.js/NestJS API endpoints, worked with PostgreSQL, including blob storage for certificate documents, and maintained the Docker setup. Both tools serve all Vertafore products. Coordinated AI-assisted Playwright test improvements and code reviews across teams, and handed ongoing delivery to the team before returning to Sagitta.",
   },
   {
     id: "agency",
@@ -178,7 +178,7 @@ export const experience: readonly Experience[] = [
     title: "Senior Front-End Developer",
     context: "Agency One",
     summary:
-      "Built a reusable component library and shared top navigation that participating products integrated with their authentication token. Enabled users to move between products without another login while carrying customer and policy context. Moved to the next assignment after the product stabilized.",
+      "Built a reusable component library used across all Vertafore products, in React and TypeScript with Node.js/NestJS services, PostgreSQL and Docker, and shared top navigation that participating products integrated with their authentication token. Enabled users to move between products without another login while carrying customer and policy context. Moved to the next assignment after the product stabilized.",
   },
   {
     id: "sagitta",
@@ -186,7 +186,7 @@ export const experience: readonly Experience[] = [
     title: "Full-Stack Engineer",
     context: "Sagitta",
     summary:
-      "Reorganized the architecture and initiated the React migration. Defined the VBScript conversion and React approaches and built the first pages so other teams could pick them up and continue. Improved CI/CD speed by over 200%, reduced builds from ~40s to 15–18s and redundant renders from nine to one. Shipped API endpoints and hotfixes for legacy database integration, and challenged the token-management decision that threatened browser navigation.",
+      "Reorganized the architecture and initiated the React migration. Defined the VBScript conversion and React approaches and built the first pages so other teams could pick them up and continue. Cut the GitLab CI/CD pipeline from about 65 to about 20 minutes, reduced builds from ~40s to 15–18s and redundant renders from nine to one. Shipped C#/.NET endpoints and hotfixes, contributed to the legacy Rocket UniVerse database integration, and handled production escalations and quarterly release stabilization for a product used by tens of agencies, the largest with up to 100,000 users. Challenged the token-management decision that threatened browser navigation.",
   },
   {
     id: "independent",
@@ -195,7 +195,7 @@ export const experience: readonly Experience[] = [
     organization: "Project-based client work",
     context: "Full-stack development",
     summary:
-      "Delivered React and Node.js applications end to end, including API integrations, authentication and deployment. Turned static designs into custom WordPress themes for marketing and e-commerce sites, and worked directly with clients on requirements, roadmaps, SEO and post-launch improvements.",
+      "Delivered React and Node.js applications end to end with Express or NestJS and MongoDB, including API integrations, authentication and deployment, and hosted an Express video streaming application on AWS EC2. Turned static designs into custom WordPress themes for marketing and e-commerce sites, and worked directly with clients on requirements, roadmaps, SEO and post-launch improvements.",
   },
 ];
 
@@ -206,6 +206,7 @@ export const skillGroups = [
     description: "Agents with explicit handoffs and review gates.",
     skills: [
       "GitHub Copilot",
+      "Claude",
       "Custom agents",
       "Multi-agent workflows",
       "Reusable prompts",
@@ -241,6 +242,8 @@ export const skillGroups = [
       "Node.js",
       "NestJS",
       "Express",
+      "PostgreSQL",
+      "MongoDB",
       "Legacy database integration",
     ],
   },
@@ -254,6 +257,8 @@ export const skillGroups = [
       "Playwright",
       "Git / GitLab",
       "CI/CD",
+      "Docker",
+      "AWS",
       "Vite",
       "Webpack",
     ],
@@ -276,6 +281,7 @@ export const education = [
 ] as const;
 
 export const languages = [
+  { code: "uk", name: "Ukrainian", level: "Native" },
   { code: "en", name: "English", level: "Fluent" },
   { code: "de", name: "German", level: "Proficient" },
   { code: "ja", name: "Japanese", level: "Beginner" },
@@ -305,7 +311,8 @@ export const ui = {
   years: "years",
   engineering: "of software engineering",
   since: "Since 2021",
-  availability: "Based in Galicia, Spain. Open to roles in Spain and across Europe.",
+  availability:
+    "Based in Galicia, Spain. Open to roles in Spain and across Europe. Available immediately.",
   communication:
     "Working language: English. Written communication in Spanish via chat or email with AI-assisted translation.",
   translationNote: null as string | null,
@@ -341,7 +348,7 @@ export const ui = {
     label: "Expertise",
     title: ["The right tools.", "And the judgment to use them."],
     summary:
-      "Full-stack range across React and .NET, with a practical, reviewable approach to AI-assisted engineering.",
+      "Full-stack range across React, Node.js and .NET, with a practical, reviewable approach to AI-assisted engineering.",
   },
   contactLabel: "Get in touch",
   contactTitle: ["Let's talk about", "what comes next"],

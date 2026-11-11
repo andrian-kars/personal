@@ -82,7 +82,7 @@ const metrics: Record<
     note: "Estimación inicial frente a la entrega tras cuestionar el enfoque de gestión de tokens.",
   },
   pipeline: {
-    label: "Proceso de CI/CD más rápido",
+    label: "Pipeline de CI/CD en GitLab",
     note: "Mejoré el proceso de Sagitta para lograr entregas más rápidas y fiables.",
   },
   builds: {
@@ -116,28 +116,28 @@ const experience: Record<
     organization: identity.employer,
     context: "Import Tool y Certificates Platform",
     summary:
-      "Comencé como consultor de arquitectura frontend en Import Tool: evalué el diseño, implementé mejoras, elaboré una hoja de ruta priorizada y colaboré con otros ingenieros para integrarlo con Certificates Platform. Desarrollé las funciones de generación, descarga e importación de documentos y visualización de PDF, corrigiendo fallos en todo el proceso. Coordiné mejoras de pruebas con Playwright y revisiones de código asistidas por IA entre equipos, y delegué en el equipo la continuidad del desarrollo antes de volver a Sagitta.",
+      "Comencé como consultor de arquitectura frontend en Import Tool: evalué el diseño, implementé mejoras, elaboré una hoja de ruta priorizada y colaboré con otros ingenieros para integrarlo con Certificates Platform. Desarrollé las funciones de generación, descarga e importación de documentos y visualización de PDF, corrigiendo fallos en todo el proceso. Desarrollé endpoints de API con Node.js y NestJS, trabajé con PostgreSQL, incluido el almacenamiento de blobs para los documentos de certificados, y mantuve la configuración de Docker. Ambas herramientas dan servicio a todos los productos de Vertafore. Coordiné mejoras de pruebas con Playwright y revisiones de código asistidas por IA entre equipos, y delegué en el equipo la continuidad del desarrollo antes de volver a Sagitta.",
   },
   agency: {
     title: "Senior Front-End Developer",
     organization: identity.employer,
     context: "Agency One",
     summary:
-      "Creé una biblioteca reutilizable y una barra de navegación compartida que cada producto integraba con su token de autenticación. Permitía cambiar de producto sin iniciar sesión de nuevo y conservar el contexto del cliente y sus pólizas. Pasé a otro proyecto cuando el producto se estabilizó.",
+      "Creé una biblioteca de componentes reutilizable para todos los productos de Vertafore, con React y TypeScript sobre servicios Node.js/NestJS, PostgreSQL y Docker, y una barra de navegación compartida que cada producto integraba con su token de autenticación. Permitía cambiar de producto sin iniciar sesión de nuevo y conservar el contexto del cliente y sus pólizas. Pasé a otro proyecto cuando el producto se estabilizó.",
   },
   sagitta: {
     title: "Full-Stack Engineer",
     organization: identity.employer,
     context: "Sagitta",
     summary:
-      "Reorganicé la arquitectura e inicié la migración a React. Definí los enfoques de conversión de VBScript y migración a React y creé las primeras páginas para que otros equipos continuaran el trabajo. Aumenté la velocidad de CI/CD en más del 200 %, reduje el tiempo de compilación de unos 40 s a 15–18 s y los renderizados redundantes de nueve a uno. Implementé endpoints y correcciones para la integración con bases de datos heredadas y cuestioné la gestión de tokens que ponía en riesgo la navegación.",
+      "Reorganicé la arquitectura e inicié la migración a React. Definí los enfoques de conversión de VBScript y migración a React y creé las primeras páginas para que otros equipos continuaran el trabajo. Reduje el pipeline de CI/CD en GitLab de unos 65 a unos 20 minutos, el tiempo de compilación de unos 40 s a 15–18 s y los renderizados redundantes de nueve a uno. Implementé endpoints y correcciones en C#/.NET, contribuí a la integración con la base de datos heredada Rocket UniVerse y atendí incidencias escaladas en producción y la estabilización trimestral de versiones de un producto usado por decenas de agencias, la mayor con hasta 100 000 usuarios. Cuestioné la gestión de tokens que ponía en riesgo la navegación.",
   },
   independent: {
     title: "Independent Software Engineer",
     organization: "Proyectos para clientes",
     context: "Desarrollo full-stack",
     summary:
-      "Entregué aplicaciones React y Node.js de principio a fin, incluidas integraciones de API, autenticación y despliegue. Convertí diseños estáticos en temas WordPress para sitios comerciales y de comercio electrónico, y trabajé directamente con clientes en requisitos, planificación, SEO y mejoras posteriores al lanzamiento.",
+      "Entregué aplicaciones React y Node.js de principio a fin con Express o NestJS y MongoDB, incluidas integraciones de API, autenticación y despliegue, y alojé una aplicación Express de streaming de vídeo en AWS EC2. Convertí diseños estáticos en temas WordPress para sitios comerciales y de comercio electrónico, y trabajé directamente con clientes en requisitos, planificación, SEO y mejoras posteriores al lanzamiento.",
   },
 };
 
@@ -150,6 +150,7 @@ const skillGroups: Record<
     description: "Agentes con traspasos explícitos y validación humana.",
     skills: [
       "GitHub Copilot",
+      "Claude",
       "Agentes personalizados",
       "Flujos multiagente",
       "Prompts reutilizables",
@@ -183,6 +184,8 @@ const skillGroups: Record<
       "Node.js",
       "NestJS",
       "Express",
+      "PostgreSQL",
+      "MongoDB",
       "Integración con bases de datos heredadas",
     ],
   },
@@ -195,6 +198,8 @@ const skillGroups: Record<
       "Playwright",
       "Git / GitLab",
       "CI/CD",
+      "Docker",
+      "AWS",
       "Vite",
       "Webpack",
     ],
@@ -213,6 +218,7 @@ const languages: Record<
   Item<typeof en.languages>["code"],
   Pick<Item<Content["languages"]>, "name" | "level">
 > = {
+  uk: { name: "Ucraniano", level: "Nativo" },
   en: { name: "Inglés", level: "Fluido" },
   de: { name: "Alemán", level: "Avanzado" },
   ja: { name: "Japonés", level: "Principiante" },
@@ -230,14 +236,18 @@ export const es: Content = {
   profile: {
     ...identity,
     role: "Ingeniero full-stack sénior",
-    specialties: ["Ingeniería asistida por IA", "React y TypeScript", "C# y .NET"],
+    specialties: [
+      "Ingeniería asistida por IA",
+      "React y TypeScript",
+      "Node.js, C# y .NET",
+    ],
     location: "Galicia, España",
     cv: "/andrian-kars-cv-es.pdf",
     cvFileName: "Andrian-Karsanashvili-CV-ES.pdf",
     summary:
-      "Modernizo software complejo con React, TypeScript y .NET, desde las reglas de negocio heredadas hasta flujos fiables en producción.",
+      "Modernizo software complejo con React, TypeScript, Node.js y .NET, desde las reglas de negocio heredadas hasta flujos fiables en producción.",
     description:
-      "Ingeniero full-stack sénior en Galicia, España: más de 7 años con React, TypeScript y C#/.NET y flujos de agentes de IA. Abierto a oportunidades en Europa.",
+      "Ingeniero full-stack sénior en Galicia, España: más de 7 años con React, TypeScript, Node.js y C#/.NET y flujos de agentes de IA. Abierto a oportunidades en Europa.",
   },
   aiWorkflow: {
     category: "Ingeniería asistida por IA",
@@ -280,7 +290,7 @@ export const es: Content = {
     engineering: "en ingeniería de software",
     since: "Desde 2021",
     availability:
-      "Resido en Galicia, España. Abierto a oportunidades en España y en toda Europa.",
+      "Resido en Galicia, España. Abierto a oportunidades en España y en toda Europa. Disponibilidad inmediata.",
     communication:
       "Idioma de trabajo: inglés. Comunicación escrita en español por chat o correo electrónico mediante traducción asistida por IA.",
     translationNote: "Versión en español traducida con ayuda de IA.",
@@ -316,7 +326,7 @@ export const es: Content = {
       label: "Competencias",
       title: ["Las herramientas adecuadas.", "Y el criterio para usarlas."],
       summary:
-        "Desarrollo full-stack con React y .NET y un enfoque práctico y verificable de la ingeniería asistida por IA.",
+        "Desarrollo full-stack con React, Node.js y .NET y un enfoque práctico y verificable de la ingeniería asistida por IA.",
     },
     contactLabel: "Contacto",
     contactTitle: ["Hablemos de", "lo que viene después"],

@@ -20,7 +20,8 @@ test("shows the agreed identity and evidence without browser errors", async ({
   await expect(page.locator("#experience")).toContainText(
     "submits team time reports automatically",
   );
-  await expect(page.locator("#impact dl")).toContainText("200%+");
+  await expect(page.locator("#impact dl")).toContainText("~20 min");
+  await expect(page.locator("#impact dl")).not.toContainText("200%");
   await expect(page.locator("#case-architecture")).toContainText(
     "seven teams of five engineers",
   );
@@ -368,7 +369,7 @@ test("serves the approved CV and downloads it", async ({ page, request }) => {
     createHash("sha256")
       .update(await response.body())
       .digest("hex"),
-  ).toBe("a135a2b2433a2a2ebfe21d80593da96d5d44eec0db72e7a57bd74026b764c2c9");
+  ).toBe("e32424016b50dc6f9181f4583a680cc64c837f834b68f3d4910df8578cc52aba");
   await page.goto("/");
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download CV (PDF)", exact: true }).click();
@@ -557,7 +558,7 @@ test("publishes consistent metadata and generated images", async ({ page, reques
     { "@type": "CollegeOrUniversity", name: "Ivan Franko National University of Lviv" },
   ]);
   expect(person.homeLocation.name).toBe("Galicia, Spain");
-  expect(person.knowsLanguage).toEqual(["en", "de", "ja"]);
+  expect(person.knowsLanguage).toEqual(["uk", "en", "de", "ja"]);
   expect(person.knowsAbout).toContain("React");
   expect(person.sameAs).toEqual([
     "https://www.linkedin.com/in/andrian-kars/",
@@ -592,9 +593,9 @@ test("has usable public contact links", async ({ page }) => {
   await expect(
     contact.getByRole("link", { name: "andrian.karsanashvili@gmail.com" }),
   ).toHaveAttribute("href", "mailto:andrian.karsanashvili@gmail.com");
-  await expect(contact.getByRole("link", { name: "+380 68 825 46 64" })).toHaveAttribute(
+  await expect(contact.getByRole("link", { name: "+34 604 952 317" })).toHaveAttribute(
     "href",
-    "tel:+380688254664",
+    "tel:+34604952317",
   );
   for (const name of ["LinkedIn", "GitHub"]) {
     await expect(contact.getByRole("link", { name: new RegExp(name) })).toHaveAttribute(

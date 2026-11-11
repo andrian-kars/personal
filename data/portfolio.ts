@@ -4,14 +4,14 @@ export const identity = {
   lastName: "Karsanashvili",
   experience: "7+",
   email: "andrian.karsanashvili@gmail.com",
-  phone: "+380688254664",
-  phoneDisplay: "+380 68 825 46 64",
+  phone: "+34604952317",
+  phoneDisplay: "+34 604 952 317",
   url: "https://andrian-kars.com",
   linkedin: "https://www.linkedin.com/in/andrian-kars/",
   github: "https://github.com/andrian-kars",
   employer: "EPAM Systems",
   university: "Ivan Franko National University of Lviv",
-  languageCodes: ["en", "de", "ja"],
+  languageCodes: ["uk", "en", "de", "ja"],
 } as const;
 
 export const employment = {
@@ -39,7 +39,7 @@ export const engagements = {
 
 export const measurements = {
   delivery: { before: "18", value: "6" },
-  pipeline: { value: "200%+" },
+  pipeline: { before: "~65 min", value: "~20 min" },
   builds: { before: "~40s", value: "15–18s" },
 } as const;
 

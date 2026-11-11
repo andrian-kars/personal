@@ -32,6 +32,7 @@ const intentionalEnglish = new Set([
   "Sagitta",
   "Senior Engineer Growth Program",
   "GitHub Copilot",
+  "Claude",
   "React",
   "TypeScript",
   "JavaScript",
@@ -46,6 +47,10 @@ const intentionalEnglish = new Set([
   "Node.js",
   "NestJS",
   "Express",
+  "PostgreSQL",
+  "MongoDB",
+  "Docker",
+  "AWS",
   "Jest",
   "React Testing Library",
   "Playwright",
@@ -221,8 +226,8 @@ for (const locale of locales) {
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("application/pdf");
     const hashes = {
-      en: "a135a2b2433a2a2ebfe21d80593da96d5d44eec0db72e7a57bd74026b764c2c9",
-      es: "ba2ea20f0d0185d9b04766f524529ce2a39ea0d10a1d224b256d9942c712fe99",
+      en: "e32424016b50dc6f9181f4583a680cc64c837f834b68f3d4910df8578cc52aba",
+      es: "00fbd95a326ef0d232691ac934343b92e5b1af82ae50ddb910f5b5ae82aa7756",
     };
     expect(
       createHash("sha256")
@@ -262,7 +267,7 @@ for (const locale of locales) {
     );
     expect(schema.inLanguage).toBe(locale);
     expect(schema.mainEntity["@id"]).toBe(`${en.profile.url}/#person`);
-    expect(schema.mainEntity.knowsLanguage).toEqual(["en", "de", "ja"]);
+    expect(schema.mainEntity.knowsLanguage).toEqual(["uk", "en", "de", "ja"]);
     expect(schema.mainEntity.homeLocation.name).toBe(content.profile.location);
     await expect(page.locator("#contact")).toContainText(content.ui.communication);
     await expect(page.locator("#contact")).toContainText(content.ui.availability);
