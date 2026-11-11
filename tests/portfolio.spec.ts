@@ -430,6 +430,51 @@ test("serves the Sharkies app under /sharkies without locale redirects", async (
   expect(errors).toEqual([]);
 });
 
+// Almanac's security headers (next.config) are not checked here: `next start` leaves config
+// headers off proxied responses, while Vercel adds them, as it does for /sharkies.
+test("serves the Almanac app under /almanac without locale redirects", async ({
+  page,
+  request,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Network-backed check runs once.");
+  const slash = await request.get("/almanac/", { maxRedirects: 0 });
+  expect(slash.status()).toBe(308);
+  expect(slash.headers().location).toBe("/almanac");
+  for (const path of [
+    "/almanac",
+    "/almanac/day/2024-05-01",
+    "/almanac/bookmarks?type=event",
+  ]) {
+    const response = await request.get(path, {
+      headers: { "accept-language": "es-ES,es;q=0.9" },
+      maxRedirects: 0,
+    });
+    expect(response.status(), path).toBe(200);
+    const html = await response.text();
+    expect(html).toContain("<title>Almanac</title>");
+    const script = html.match(/src="(\/almanac\/assets\/[^"]+\.js)"/)?.[1];
+    expect(script, path).toBeTruthy();
+    const asset = await request.get(script!);
+    expect(asset.status()).toBe(200);
+    expect(asset.headers()["content-type"]).toContain("javascript");
+  }
+  for (const file of ["favicon.svg", "color-scheme.js"]) {
+    const response = await request.get(`/almanac/${file}`, { maxRedirects: 0 });
+    expect(response.status(), file).toBe(200);
+    expect(response.headers()["content-type"], file).not.toContain("text/html");
+  }
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/almanac/day/2024-05-01");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveAccessibleName(
+    /May 1, 2024|1 May 2024/,
+  );
+  await page.getByRole("link", { name: "Previous day" }).click();
+  await expect(page).toHaveURL(/\/almanac\/day\/2024-04-30$/);
+  await page.getByRole("region", { name: "Weather" }).getByText("Sunrise").waitFor();
+  expect(errors).toEqual([]);
+});
+
 test("serves the Solidaro site under /solidaro without locale redirects", async ({
   page,
   request,
